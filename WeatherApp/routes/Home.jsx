@@ -1,12 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
+import TopSection from "../components/TopSection"
+import MidSection from "../components/MidSection";
+import BottomSection from "../components/BottomSection";
 
 const Home = () => {
   return (
     <div className="Home">
-      {/* <TopSection/>
-            <MidSection/>
-            <BottomSection/> */}
+      <TopSection/>
+      <MidSection/>
+      <BottomSection/>
             
     </div>
   );

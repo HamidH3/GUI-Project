@@ -1,19 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
 
-
-const Hourlyforecast = () => {
+const HourlyForecast = () => {
   return (
     <div>
-      
+      <p>hourly</p>
     </div>
   );
 };
 
+HourlyForecast.propTypes = {};
 
-Hourlyforecast.propTypes = {
-
-};
-
-
-export default Hourlyforecast;
+export default HourlyForecast;

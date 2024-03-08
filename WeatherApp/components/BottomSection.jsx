@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const BottomSection = () => {
     return (
         <div>
-            
+            {/* Should include vertical scroller with extra info */}
         </div>
     );
 };

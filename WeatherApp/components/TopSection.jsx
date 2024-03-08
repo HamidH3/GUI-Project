@@ -1,13 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import hourlyForecast from "/components/hourlyForecast"
 
 
 const TopSection = () => {
     return (
-        <div>
-            <p>hi</p>
-        </div>
+      <div className = "TopSec">
+        <hourlyForecast />
+        {/* Should include iphone components such as time
+            and battery symbils, as well as the daily forecast and location */}
+        <p>hiiiii</p>
+      </div>
     );
+    
 };
 
 
