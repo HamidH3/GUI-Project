@@ -1,0 +1,10 @@
+.bottomSec {
+    height: 150px;
+  overflow-y: scroll;
+}
+
+.bottom-scroll {
+  overflow-y: scroll;
+
+   max-height: calc(100% - 40px);
+}

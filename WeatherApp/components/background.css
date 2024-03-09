@@ -1,11 +1,4 @@
-/* .background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* This will ensure the image covers the entire background */
-/* z-index: -1; This will position the image behind other content */
+
 
 .background {
   position: absolute;
@@ -15,11 +8,5 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
-  /* background-position: center; */
-  /* backdrop-filter: blur(10px); */
-  /* background-attachment: fixed; */
-  /* margin: 0; */
-  /* padding: 0; */
+
 }

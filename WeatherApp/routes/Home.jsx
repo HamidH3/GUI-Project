@@ -10,15 +10,27 @@ const Home = () => {
   return (
     <div className="Home">
       <div className="phone-screen">
+        
         <div className="phone-widgets">
           <Battery level={50} />
           <Time />
         </div>
-        <div className = "">
-          <TopSection />
-          <MidSection />
-          <BottomSection />
+
+        <div className="forecasts">
+          <div className="topsection">
+            <TopSection />
+          </div>
+          <div className="midsection">
+            <MidSection />
+          </div>
+          <div className="bottomsection">
+            <p>bottom</p>
+            <div className="bottomComponent">
+              <BottomSection />
+            </div>
+          </div> 
         </div>
+
       </div>
     </div>
   );
