@@ -10,10 +10,9 @@ const Home = () => {
   return (
     <div className="Home">
       <div className="phone-screen">
-        
         <div className="phone-widgets">
-          <Battery level={50} />
-          <Time />
+          <Time className = "topleft"/>
+          <Battery className = "topright" level={50} />
         </div>
 
         <div className="forecasts">
@@ -28,9 +27,8 @@ const Home = () => {
             <div className="bottomComponent">
               <BottomSection />
             </div>
-          </div> 
+          </div>
         </div>
-
       </div>
     </div>
   );

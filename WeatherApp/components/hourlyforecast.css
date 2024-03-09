@@ -1,4 +1,23 @@
-.hourly{
+/* .hourly{
     color:white;
-    font-size: 2px;
+    font-size: 15px;
+} */
+
+/* hourlyForecast.css */
+
+.hourly {
+  display: flex;
+  overflow-x: scroll;
+  white-space: nowrap; /* Prevent wrapping of items */
+    width: 30%;
+    margin: auto;
+}
+
+
+.time-block {
+  flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
+  padding: 10px;
+  margin-right: 10px; /* Add space between blocks */
+  background-color: #f0f0f0; /* Background color for each time block */
+  border-radius: 5px;
 }
