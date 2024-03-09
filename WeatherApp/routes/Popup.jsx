@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Popup = () => {
   return (
     <div>
-      <p>hi</p>
+      <p></p>
     </div>
   );
 };

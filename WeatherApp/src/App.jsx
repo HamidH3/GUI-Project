@@ -4,6 +4,7 @@ import Home from "/routes/Home";
 import PopUp from "/routes/Popup.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+
 function App() {
   const router = createBrowserRouter([
     {

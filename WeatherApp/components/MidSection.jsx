@@ -6,6 +6,7 @@ const MidSection = () => {
     return (
         <div className = "MidSec">
             {/* should include the middle horizntal scroller for hourly forecast */}
+            <p>middle</p>
         </div>
     );
 };

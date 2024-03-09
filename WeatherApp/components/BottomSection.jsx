@@ -6,6 +6,7 @@ const BottomSection = () => {
     return (
         <div>
             {/* Should include vertical scroller with extra info */}
+            <p>bottom</p>
         </div>
     );
 };

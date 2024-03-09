@@ -8,7 +8,7 @@ const TopSection = () => {
         <hourlyForecast />
         {/* Should include iphone components such as time
             and battery symbils, as well as the daily forecast and location */}
-        <p>hiiiii</p>
+        <p>top</p>
       </div>
     );
     
