@@ -1,10 +1,25 @@
-.bottomSec {
+/* .bottomSec {
     height: 150px;
   overflow-y: scroll;
+} */
+.bottomSec{
+    display: grid;
+    grid-template-rows: 2fr 8fr;
+    padding: 0;
+    height: 300px;
 }
 
-.bottom-scroll {
+.bottomComponent {
   overflow-y: scroll;
-
-   max-height: calc(100% - 40px);
 }
+.bottomComponent::-webkit-scrollbar {
+  width: 0;
+}
+.bottomComponent::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bottomComponent::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+

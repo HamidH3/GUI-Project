@@ -1,9 +1,5 @@
+.app {
 
-#root {
-  max-width: 1080px;
+  height: 100dvh;
   text-align: center;
-  
 }
-
-
- 

@@ -1,6 +1,9 @@
-.TopSec {
-  border: 1px solid #ffffff;
-  border-radius: 2px;
- padding-inline: 55px;
+.topSec {
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+width: 60%;
+margin: auto;
+   height: 150px;
+  margin-top: 150px; 
 }
 

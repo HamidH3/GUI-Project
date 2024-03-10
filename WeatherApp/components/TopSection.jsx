@@ -5,7 +5,7 @@ import "./TopSection.css"
 
 const TopSection = () => {
     return (
-      <div className = "TopSec">
+      <div className = "topSec">
         {/* Should include iphone components such as time
             and battery symbils, as well as the daily forecast and location */}
         <p>location</p>
@@ -15,11 +15,6 @@ const TopSection = () => {
       </div>
     );
     
-};
-
-
-TopSection.propTypes = {
-
 };
 
 

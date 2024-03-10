@@ -4,20 +4,29 @@
 } */
 
 /* hourlyForecast.css */
-
-.hourly {
+ 
+ /* .hourly {
   display: flex;
   overflow-x: scroll;
-  white-space: nowrap; /* Prevent wrapping of items */
+  white-space: nowrap; 
     width: 30%;
     margin: auto;
+} */
+.hourly{
+    text-align: center;
+    width: 40%;
+    margin: auto;
+    overflow-x: scroll;
+    white-space: nowrap; 
+    display: flex;
+/* flex-direction: column; */
 }
-
 
 .time-block {
-  flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
-  padding: 10px;
-  margin-right: 10px; /* Add space between blocks */
-  background-color: #f0f0f0; /* Background color for each time block */
+
+  padding: 3px;
+  margin-right: 10px; 
+  background-color: #f0f0f0; 
   border-radius: 5px;
-}
+  /* flex-shrink: 0; */
+} 

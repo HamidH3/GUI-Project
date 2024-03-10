@@ -7,7 +7,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
   const router = createBrowserRouter([
+    
     {
+      
       path: "/",
       element: <Home />,
     },
@@ -18,8 +20,9 @@ function App() {
   ]);
 
   return (
-    <div>
-      <RouterProvider router={router} />;
+    <div className = "app">
+      
+      <RouterProvider router={router} />
     </div>
   );
 }

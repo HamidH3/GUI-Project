@@ -4,15 +4,12 @@ import HourlyForecast from "/components/hourlyForecast";
 
 const MidSection = () => {
   return (
-    <div className="MidSec">
-      {/* should include the middle horizntal scroller for hourly forecast */}
-      <div className="hourlycontainer">
-        <HourlyForecast />
-      </div>
+    <div className="midSec">
+      <p>Hourly Forecast</p>
+      <HourlyForecast />
     </div>
   );
 };
 
-MidSection.propTypes = {};
 
 export default MidSection;

@@ -3,37 +3,26 @@ import "./Home.css";
 import TopSection from "../components/TopSection";
 import MidSection from "../components/MidSection";
 import BottomSection from "../components/BottomSection";
-import Battery from "../components/battery";
-import Time from "../components/time";
+// import Battery from "../components/battery";
+// import Time from "../components/time";
 
 const Home = () => {
   return (
     <div className="Home">
-      <div className="phone-screen">
-        <div className="phone-widgets">
+      {/* <div className="phone-widgets">
           <Time className = "topleft"/>
           <Battery className = "topright" level={50} />
-        </div>
+        </div> */}
 
-        <div className="forecasts">
-          <div className="topsection">
-            <TopSection />
-          </div>
-          <div className="midsection">
-            <MidSection />
-          </div>
-          <div className="bottomsection">
-            <p>bottom</p>
-            <div className="bottomComponent">
-              <BottomSection />
-            </div>
-          </div>
-        </div>
+      {/* <div className="forecasts"> */}
+        <TopSection />
+
+        <MidSection />
+
+        <BottomSection />
       </div>
-    </div>
+    //  </div>
   );
 };
-
-Home.propTypes = {};
 
 export default Home;

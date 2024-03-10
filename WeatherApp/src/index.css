@@ -6,12 +6,6 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
 
-  /* background-image: url("/src/images/background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%; */
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,18 +14,6 @@
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+  padding: 0;
 
-
-@media only screen and (max-width: 600px) {
-  /* Styles for screens up to 600px wide (typical phone screens) */
-  body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
 }

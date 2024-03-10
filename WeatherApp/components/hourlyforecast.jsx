@@ -1,35 +1,18 @@
-// import React from "react";
-// import "./hourlyForecast.css"
-
-// const HourlyForecast = () => {
-//   return (
-//     <div className = "hourly">
-//       <p>hourly</p>
-//     </div>
-//   );
-// };
-
-// HourlyForecast.propTypes = {};
-
-// export default HourlyForecast;
-
 import React from "react";
 import "./hourlyForecast.css";
 
 const HourlyForecast = () => {
-  const renderTimeBlocks = () => {
-    const times = [];
-    for (let hour = 6; hour <= 22; hour++) {
-      times.push(
-        <div key={hour} className="time-block">
-          {hour}:00
-        </div>
-      );
-    }
-    return times;
-  };
+  return (
 
-  return <div className="hourly">{renderTimeBlocks()}</div>;
+    <div className="hourly">
+      <div className="time-block">6:00 AM</div>
+      <div className="time-block">7:00 AM</div>
+      <div className="time-block">8:00 AM</div>
+      <div className="time-block">9:00 AM</div>
+      <div className="time-block">10:00 AM</div>
+
+    </div>
+  );
 };
 
 export default HourlyForecast;

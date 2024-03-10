@@ -1,13 +1,15 @@
 import React from 'react';
+import "./BottomSection.css"
 import PropTypes from 'prop-types';
 
 
 const BottomSection = () => {
     return (
       <div className="bottomSec">
+        <p>bottom</p>
         {/* Should include vertical scroller with extra info */}
 
-        <div className="bottom-scroll">
+        <div className="bottomComponent">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
             at eligendi velit odio eveniet harum deleniti doloremque similique,
