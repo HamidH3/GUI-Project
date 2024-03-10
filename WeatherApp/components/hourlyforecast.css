@@ -14,7 +14,7 @@
 } */
 .hourly{
     text-align: center;
-    width: 50%;
+    width: 100px;
     margin: auto;
     overflow-x: scroll;
     white-space: nowrap; 
@@ -22,11 +22,15 @@
 /* flex-direction: column; */
 }
 
+.hourly::-webkit-scrollbar {
+  width: 0; /* Hide the scrollbar */
+}
+
 .time-block {
 
   padding: 3px;
   margin-right: 10px; 
-  background-color: #f0f0f0; 
+  background-color:rgba(139, 156, 132, 0.384);
   border-radius: 5px;
   /* flex-shrink: 0; */
 } 

@@ -1,16 +1,7 @@
-/* .bottomSec {
-    height: 150px;
-  overflow-y: scroll;
-} */
+
 .bottomSec{
     display: grid;
-    grid-template-rows: 2fr 8fr;
-    padding: 10px;
-    border: 1px solid white;
-    width:80%;
-    margin: auto;
-    background-color:rgba(16, 49, 3, 0.281);
-    height: 300px;
+    height: 400px;
 
 }
 

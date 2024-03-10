@@ -10,15 +10,27 @@
 .Home {
   /* border-radius: 20px; */
   background-image: url("/src/images/background.png");
+  
   background-repeat: no-repeat;
   background-size: cover;
   height: 100dvh;
   display: grid;
-  grid-template-rows: 1fr 5fr 4fr;
-  
+  grid-template-rows: 1fr 3fr 4fr;
+}
+
 
   /* box-shadow: 20px 20px 6px rgba(0, 0, 0, 0.3); */
-}
+/* }
+.Home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1; 
+} */
 
 /* .phone-widgets {
   position: absolute;

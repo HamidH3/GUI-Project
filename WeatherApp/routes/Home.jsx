@@ -9,19 +9,14 @@ import BottomSection from "../components/BottomSection";
 const Home = () => {
   return (
     <div className="Home">
-      {/* <div className="phone-widgets">
-          <Time className = "topleft"/>
-          <Battery className = "topright" level={50} />
-        </div> */}
-
-      {/* <div className="forecasts"> */}
+      
         <TopSection />
 
         <MidSection />
 
         <BottomSection />
-      </div>
-    //  </div>
+      
+    </div>
   );
 };
 
