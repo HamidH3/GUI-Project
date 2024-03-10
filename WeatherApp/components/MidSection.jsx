@@ -1,6 +1,6 @@
 import React from "react";
 import "./MidSection.css";
-import HourlyForecast from "/components/hourlyForecast";
+import HourlyForecast from "./hourlyForecast";
 
 const MidSection = () => {
   return (
@@ -10,6 +10,5 @@ const MidSection = () => {
     </div>
   );
 };
-
 
 export default MidSection;
