@@ -76,16 +76,26 @@ function WeatherForecast() {
           {forecastData.time.map((day, index) => (
             <button key={day}>
               <b>{new Date(day).toLocaleDateString()}</b>
-              <p>
+              <p className="details">
+                <span>
+                Rainfall: {forecastData.precipitation_sum[index]} mm
+                </span>
+              <span className="weather-icon">
                 <img
-                  src={forecastData.temperature_2m_max[index] > 15 ? "./src/images/sunny.png" : "./src/images/background.png}</img>"} //here in the other images use a different image
-                   alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
+                  src={
+                    forecastData.temperature_2m_max[index] > 15
+                      ? "./src/images/sunny.png"
+                      : "./src/images/background.png}</img>"
+                  } //here in the other images use a different image
+                  //  alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
                   style={{ width: "30px", height: "30px" }}
                 />
+                </span>
+                <span>
                 Max Temp: {forecastData.temperature_2m_max[index]}°C
+              </span>
               </p>
-              <p>Min Temp: {forecastData.temperature_2m_min[index]}°C</p>
-              <p>Rainfall: {forecastData.precipitation_sum[index]} mm</p>
+              {/* <p>Min Temp: {forecastData.temperature_2m_min[index]}°C</p> */}
             </button>
           ))}
         </ul>

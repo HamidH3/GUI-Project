@@ -5,6 +5,7 @@
     width:80%;
     margin: auto;
     background-color:rgba(139, 156, 132, 0.384);
+    
 
 }
 
@@ -24,15 +25,17 @@
   cursor: pointer;
 }
 
-.weekly-container button:hover {
-  /* background-color: rgba(139, 156, 132, 0.384); */
-}
+/* .weekly-container button:hover {
+  background-color: rgba(139, 156, 132, 0.384);
+} */
 
 .weekly-container button b {
   display: block;
   margin-bottom: 5px;
+  color: white;
 }
 
 .weekly-container button p {
   margin: 0;
+  color: white;
 }
