@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
+import "./Popup.css";
 
-const Popup = () => {
+function Popup({ onClose }) {
   return (
-    <div>
-      <p></p>
+    <div className="popup">
+      <h1>Information</h1>
+      <button onClick={onClose} className="close">
+        Close
+      </button>
     </div>
   );
-};
+}
 
 Popup.propTypes = {};
 

@@ -1,36 +1,14 @@
-// import React from 'react';
-// import "./weeklyForecast.css";
-
-// const WeeklyForecast = () => {
-//     return (
-//       <div className="weekly-container">
-//         <h3>Weekly</h3>
-//         <p>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum labore
-//           nesciunt est sed, modi ullam accusamus in necessitatibus quas neque
-//           doloremque. Adipisci, ab soluta. Molestiae cupiditate nobis
-//           praesentium eveniet nihil.
-//         </p>
-
-//         <p>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum labore
-//           nesciunt est sed, modi ullam accusamus in necessitatibus quas neque
-//           doloremque. Adipisci, ab soluta. Molestiae cupiditate nobis
-//           praesentium eveniet nihil.
-//         </p>
-//       </div>
-//     );
-// };
-
-// export default WeeklyForecast;
-
 import React, { useState, useEffect } from "react";
 import "./weeklyForecast.css";
+import Popup from "../../routes/Popup";
+
 
 function WeatherForecast() {
   const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [buttonPopup, setButtonPopup] = useState(false);
+  
 
   const fetchWeatherData = async () => {
     setIsLoading(true);
@@ -71,6 +49,12 @@ function WeatherForecast() {
   return (
     <div className="weekly-container">
       <h2>7-Day Forecast</h2>
+
+      <button onClick={() => setButtonPopup(true)}> Open Popup</button>
+      {buttonPopup && <Popup onClose={() => setButtonPopup(false)} />}
+
+
+
       {forecastData && (
         <ul>
           {forecastData.time.map((day, index) => (
@@ -78,22 +62,22 @@ function WeatherForecast() {
               <b>{new Date(day).toLocaleDateString()}</b>
               <p className="details">
                 <span>
-                Rainfall: {forecastData.precipitation_sum[index]} mm
+                  Rainfall: {forecastData.precipitation_sum[index]} mm
                 </span>
-              <span className="weather-icon">
-                <img
-                  src={
-                    forecastData.temperature_2m_max[index] > 15
-                      ? "./src/images/sunny.png"
-                      : "./src/images/background.png}</img>"
-                  } //here in the other images use a different image
-                  //  alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
-                  style={{ width: "30px", height: "30px" }}
-                />
+                <span className="weather-icon">
+                  <img
+                    src={
+                      forecastData.temperature_2m_max[index] > 15
+                        ? "./src/images/sunny.png"
+                        : "./src/images/background.png}</img>"
+                    } //here in the other images use a different image
+                    //  alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
+                    style={{ width: "30px", height: "30px" }}
+                  />
                 </span>
                 <span>
-                Max Temp: {forecastData.temperature_2m_max[index]}°C
-              </span>
+                  Max Temp: {forecastData.temperature_2m_max[index]}°C
+                </span>
               </p>
               {/* <p>Min Temp: {forecastData.temperature_2m_min[index]}°C</p> */}
             </button>
