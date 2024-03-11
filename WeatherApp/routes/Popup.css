@@ -1,28 +1,17 @@
-/* .popup{
-    position: absolute;
-    top: 0;
-    width: 300px;
-    height: 60vh;
-    top: 20%;
-    background: rgba(16, 223, 154, 0.8);
-
-
-    display: flex;
-    justify-content: center;
-} */
 .popup {
-    border: 2px solid white;
-    border-radius: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
   position: fixed;
   top: 20px;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   /* display: flex; */
   justify-content: center;
   align-items: center;
-    backdrop-filter: blur(10px); /* Apply blur effect to the background */
+  backdrop-filter: blur(10px);
+  
 }
 .popup h1 {
   position: auto;

@@ -14,7 +14,7 @@
 } */
 .hourly{
     text-align: center;
-    width: 200px;
+    width: 350px;
     /* margin: auto; */
     overflow-x: scroll;
     white-space: nowrap; 
