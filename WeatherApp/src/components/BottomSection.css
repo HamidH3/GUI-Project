@@ -1,13 +1,10 @@
-
-.bottomSec{
-    display: grid;
-    height: 400px;
-
+.bottomSec {
+  display: grid;
+  height: 400px;
 }
 
 .bottomComponent {
   overflow-y: scroll;
-  
 }
 .bottomComponent::-webkit-scrollbar {
   width: 0;
@@ -18,5 +15,3 @@
 .bottomComponent::-webkit-scrollbar-thumb {
   background: transparent;
 }
-
-

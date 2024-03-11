@@ -25,6 +25,7 @@
 // export default WeeklyForecast;
 
 import React, { useState, useEffect } from "react";
+import "./weeklyForecast.css";
 
 function WeatherForecast() {
   const [forecastData, setForecastData] = useState(null);
@@ -68,17 +69,24 @@ function WeatherForecast() {
   }
 
   return (
-    <div>
+    <div className="weekly-container">
       <h2>7-Day Forecast</h2>
       {forecastData && (
         <ul>
           {forecastData.time.map((day, index) => (
-            <li key={day}>
+            <button key={day}>
               <b>{new Date(day).toLocaleDateString()}</b>
-              <p>Max Temp: {forecastData.temperature_2m_max[index]}Â°C</p>
-              <p>Min Temp: {forecastData.temperature_2m_min[index]}Â°C</p>
+              <p>
+                <img
+                  src={forecastData.temperature_2m_max[index] > 15 ? "./src/images/sunny.png" : "./src/images/background.png}</img>"} //here in the other images use a different image
+                   alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
+                  style={{ width: "30px", height: "30px" }}
+                />
+                Max Temp: {forecastData.temperature_2m_max[index]}°C
+              </p>
+              <p>Min Temp: {forecastData.temperature_2m_min[index]}°C</p>
               <p>Rainfall: {forecastData.precipitation_sum[index]} mm</p>
-            </li>
+            </button>
           ))}
         </ul>
       )}
