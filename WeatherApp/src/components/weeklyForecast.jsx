@@ -7,7 +7,7 @@ function WeeklyForecast() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false); //initially, button pop is set to false and not visible, when pop up button is triggered, it changes state to true and when 'close' is clicked, it triggers the 'onClose', therefore closing the popup.
-  const [selectedDaysData, setSelectedDaysData] = useState(null);
+  const [selectedDaysData, setSelectedDaysData] = useState(false);
 
   const fetchWeatherData = async () => {
     setIsLoading(true);
@@ -38,9 +38,9 @@ function WeeklyForecast() {
   }, []);
 
   //this function handles button click and sets selectedDaysData
-  const buttonClickHandle = (selectedDayIndex) => {
+  const buttonClickHandle = () => {
     setButtonPopup(true);
-    setSelectedDaysData(forecastData[selectedDayIndex]);
+    setSelectedDaysData(true);
   };
 
   if (isLoading) {
