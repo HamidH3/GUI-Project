@@ -91,7 +91,7 @@ function WeeklyForecast() {
                     <img
                       src={
                         forecastData.temperature_2m_max[index] > 14
-                          ? "./src/images/sunny.png"
+                          ? "./src/images/sun.svg"
                           : "./src/images/background.png"
                       }
                       //  alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
