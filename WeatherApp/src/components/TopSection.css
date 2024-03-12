@@ -1,8 +1,12 @@
 .topSec {
-  border: 2px solid #ffffff;
   border-radius: 10px;
   width: 350px;
   margin: auto;
   height: 150px;
-  margin-top: 150px;
+  margin-top: 3em;
+  background-color:rgba(139, 156, 132, 0.384);
+}
+
+.searchBar {
+  padding: 2em;;
 }
