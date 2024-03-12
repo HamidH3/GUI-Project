@@ -10,9 +10,9 @@ const BottomSection = () => {
       {/* Should include vertical scroller with extra info */}
 
       <div className="bottomComponent">
-        <WeatherDetails />
-        <p></p>
         <WeeklyForecast />
+        <p></p>
+        <WeatherDetails />
       </div>
     </div>
   );

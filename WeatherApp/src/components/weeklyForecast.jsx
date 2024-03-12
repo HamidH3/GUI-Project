@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./weeklyForecast.css";
 import Popup from "../../routes/Popup";
 
-function WeatherForecast() {
+function WeeklyForecast() {
   const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [buttonPopup, setButtonPopup] = useState(false); //initially, button pop is set to false and not visible, when pop up button is triggered, it changes state to true and when 'close' is clicked, it triggers the 'onClose', therefore closing the popup.
+  const [selectedDaysData, setSelectedDaysData] = useState(null);
 
   const fetchWeatherData = async () => {
     setIsLoading(true);
@@ -36,6 +37,12 @@ function WeatherForecast() {
     fetchWeatherData();
   }, []);
 
+  //this function handles button click and sets selectedDaysData
+  const buttonClickHandle = (selectedDayIndex) => {
+    setButtonPopup(true);
+    setSelectedDaysData(forecastData[selectedDayIndex]);
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -48,8 +55,16 @@ function WeatherForecast() {
     <div className="weekly-container">
       <h2>7-Day Forecast</h2>
 
-      {buttonPopup && <Popup onClose={() => setButtonPopup(false)} />}
-      {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button */}
+      {buttonPopup && (
+        <Popup
+          onClose={() => setButtonPopup(false)}
+          isVisible={true}
+          selectedDaysData={selectedDaysData}
+        />
+      )}
+
+      {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
+      It also passes the selectedDaysData to the popup */}
       {forecastData && (
         <ul>
           {forecastData.time.map((day, index) => {
@@ -65,7 +80,8 @@ function WeatherForecast() {
               : currentDate.toLocaleDateString("en-US", { weekday: "long" });
             //assigns value of today to dayLabel if dayToday is true
             return (
-              <button onClick={() => setButtonPopup(true)} key={day}>
+              // <button onClick={() => setButtonPopup(true)} key={day}>
+              <button onClick={() => buttonClickHandle(index)} key={day}>
                 <b>{dayLabel}</b>
                 <p className="details">
                   <span>
@@ -74,7 +90,7 @@ function WeatherForecast() {
                   <span className="weather-icon">
                     <img
                       src={
-                        forecastData.temperature_2m_max[index] > 15
+                        forecastData.temperature_2m_max[index] > 14
                           ? "./src/images/sunny.png"
                           : "./src/images/background.png"
                       }
@@ -96,4 +112,4 @@ function WeatherForecast() {
   );
 }
 
-export default WeatherForecast;
+export default WeeklyForecast;
