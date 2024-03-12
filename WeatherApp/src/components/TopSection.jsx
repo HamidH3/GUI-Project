@@ -30,7 +30,7 @@ const TopSection = ({ location}) => {
 };
 
 const WeatherApp = () => {
-  const [location, setLocation] = useState('Mile End');
+  const [location, setLocation] = useState();
   const [temperature, setTemperature] = useState(null);
 
   return (

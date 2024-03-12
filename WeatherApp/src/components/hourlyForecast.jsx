@@ -47,31 +47,20 @@ const HourlyForecast = () => {
     const getHourly = async () => {
       const lat = 51.9167; // Replace with your desired latitude
       const lon = 0.9; // Replace with your desired longitude
-      const key = "557c3851a3d530fbd26a94d193c33403";
-      const URL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m`;
-
+      const key = "28e0bac8d6e2712922db61d4a21b1902";
+      // const URL = `https://api.open-meteo.com/v1/forecast?latitude=${lat.toString()}&longitude=${lon.toString()}&hourly=temperature_2m`;
+      // const URL = `https://api.open-meteo.com/v1/forecast?latitude=${(lat)}&longitude=${(lon)}&hourly=temperature_2m`;
+      const URL = `https://history.openweathermap.org/data/2.5/history/city?id=2885679&type=hour&appid=28e0bac8d6e2712922db61d4a21b1902`;
       try {
         const response = await fetch(URL);
         if (!response.ok) {
           throw new Error("Failed to fetch hourly forecast data");
         }
-
         const data = await response.json();
         const currentTime = new Date();
-        const next24Hours = new Date(
-          currentTime.getTime() + 24 * 60 * 60 * 1000
-        );
-        const filteredData = data.hourly.time.filter(
-          (time) => new Date(time) <= next24Hours
-        );
-        const filteredForecast = {
-          time: filteredData,
-          temperature_2m: data.hourly.temperature_2m.slice(
-            0,
-            filteredData.length
-          ),
-        };
-        setHourlyForecast(filteredForecast);
+        const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
+        const filteredData = data.list.filter((item) => new Date(item.dt) <= next24Hours);
+        setHourlyForecast(filteredData);
       } catch (error) {
         console.error("Error fetching hourly forecast data:", error);
       }
@@ -82,21 +71,18 @@ const HourlyForecast = () => {
 
   const formatTime = (timeString) => {
     const date = new Date(timeString);
-    // Options for formatting the date
     const options = { hour: "numeric", minute: "numeric", hour12: true };
-    // Format the date using Intl.DateTimeFormat
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
+
   return (
     <div className="hourly">
-      {hourlyForecast &&
-      hourlyForecast.time &&
-      hourlyForecast.temperature_2m ? (
-        hourlyForecast.time.map((time, index) => (
+      {hourlyForecast.length > 0 ? (
+        hourlyForecast.map((item, index) => (
           <div className="time-block" key={index}>
-            <p>{formatTime(time)}</p>
-            <p>{hourlyForecast.temperature_2m[index]}°C</p>
+            <p>{formatTime(item.dt * 1000)}</p>
+            <p>{(item.main.temp - 273.15).toFixed(2)}°C</p>
           </div>
         ))
       ) : (
