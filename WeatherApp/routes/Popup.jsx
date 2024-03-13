@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import "./Popup.css";
+import {API_KEY} from "../src/API"
 
 function getWeather(selectedDaysData) {
   if (selectedDaysData) {
     const lat = 51.9167; // Replace with your desired latitude rn its mile end
     const lon = 0.9; // Replace with your desired longitude rn its mile end
-    const key = "28e0bac8d6e2712922db61d4a21b1902";
     //const url = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${key}`;
-    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${key}`
+    const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`
     fetch(url)
       .then((res) => res.json())
       .then((data) => { // INPUT DIFFERENT VALUES HERE
