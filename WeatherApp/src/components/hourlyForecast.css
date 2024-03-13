@@ -1,36 +1,18 @@
-/* .hourly{
-    color:white;
-    font-size: 15px;
-} */
-
-/* hourlyForecast.css */
- 
- /* .hourly {
-  display: flex;
+.hourly {
+  text-align: center;
+  width: 350px;
   overflow-x: scroll;
-  white-space: nowrap; 
-    width: 30%;
-    margin: auto;
-} */
-.hourly{
-    text-align: center;
-    width: 350px;
-    /* margin: auto; */
-    overflow-x: scroll;
-    white-space: nowrap; 
-    display: flex;
-/* flex-direction: column; */
+  white-space: nowrap;
+  display: flex;
 }
 
 .hourly::-webkit-scrollbar {
-  width: 0; /* Hide the scrollbar */
+  width: 0;
 }
 
 .time-block {
-
   padding: 3px;
-  margin-right: 10px; 
-  background-color:rgba(139, 156, 132, 0.384);
+  margin-right: 10px;
+  background-color: rgba(139, 156, 132, 0.384);
   border-radius: 5px;
-  /* flex-shrink: 0; */
-} 
+}

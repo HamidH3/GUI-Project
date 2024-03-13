@@ -4,10 +4,12 @@
   position: fixed;
   top: 20px;
   left: 0;
+  margin-left: -1px;
+  /* # */
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
-  /* display: flex; */
+  display: flex;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
@@ -24,6 +26,6 @@
   position: absolute;
   top: 20px;
   margin-left: 20px;
-
+color: white;
   border-radius: 5%;
 }
