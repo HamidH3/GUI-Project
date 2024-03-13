@@ -1,55 +1,18 @@
-// import React from "react";
-// import "./hourlyForecast.css";
-// const getHourly() {
-//   const lat = 51.9167; // Replace with your desired latitude rn its mile end
-//   const lon = 0.9; // Replace with your desired longitude rn its mile end
-//   const key = "557c3851a3d530fbd26a94d193c33403";
-//   const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${key}`;
-
-//   return (
-//     fetch(URL)
-//       //basically a try catch
-//       .then((result) => result.json)
-//       .then((data) => {
-//         console.log(data); // handle the API response data here
-//       })
-//       .catch((error) => console.log(error))
-//   );
-// }
-
-// const HourlyForecast = () => {
-//   return (
-
-//     <div className="hourly">
-//       <div className="time-block">6:00 AM</div>
-//       <div className="time-block">7:00 AM</div>
-//       <div className="time-block">8:00 AM</div>
-//       <div className="time-block">9:00 AM</div>
-//       <div className="time-block">10:00 AM</div>
-//       <div className="time-block">6:00 AM</div>
-//       <div className="time-block">7:00 AM</div>
-//       <div className="time-block">8:00 AM</div>
-//       <div className="time-block">9:00 AM</div>
-//       <div className="time-block">10:00 AM</div>
-//     </div>
-//   );
-// };
-
-// export default HourlyForecast;
-
 import React, { useState, useEffect } from "react";
 import "./hourlyForecast.css";
+import { getLocationFromLS } from "../functions/location";
 
 const HourlyForecast = () => {
   const [hourlyForecast, setHourlyForecast] = useState([]);
 
   useEffect(() => {
     const getHourly = async () => {
-      const lat = 51.9167; // Replace with your desired latitude
-      const lon = 0.9; // Replace with your desired longitude
+      const locationString = getLocationFromLS();
+      const location = JSON.parse(locationString); // Parse the string back into an object
+      const lat = location.lat;
+      const lon = location.lon;
       const key = "28e0bac8d6e2712922db61d4a21b1902";
-      //const URL = `https://history.openweathermap.org/data/2.5/history/city?id=2885679&type=hour&appid=28e0bac8d6e2712922db61d4a21b1902`;
-      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=51.9&lon=0.9&appid=28e0bac8d6e2712922db61d4a21b1902`
+      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${key}`
       try {
         const response = await fetch(URL);
         if (!response.ok) {
@@ -58,7 +21,7 @@ const HourlyForecast = () => {
         const data = await response.json();
         const currentTime = new Date();
         const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-        console.log(next24Hours)
+        // console.log(next24Hours)
         const filteredData = data.list.filter((item) => new Date(item.dt_txt) <= next24Hours);
         console.log(filteredData)
         setHourlyForecast(filteredData);
@@ -68,7 +31,8 @@ const HourlyForecast = () => {
     };
 
     getHourly();
-  }, []);
+  }, [getLocationFromLS]);
+  // window.location.reload();
 
   const formatTime = (timeString) => {
     const date = new Date(timeString);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
+import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
 const SearchBar = ({ onLocationChange }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -62,7 +63,7 @@ const WeatherApp = () => {
           const lat = data[0].lat;
           const lon = data[0].lon;
           const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-
+          setLocationInLS(lat, lon);
           return fetch(weatherURL);
         })
         .then((response) => response.json())
