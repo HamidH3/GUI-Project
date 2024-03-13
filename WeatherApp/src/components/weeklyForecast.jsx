@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./weeklyForecast.css";
 import Popup from "../../routes/Popup";
+import { getLocationFromLS } from "../functions/location";
 
 function WeeklyForecast() {
   const [forecastData, setForecastData] = useState(null);
@@ -14,8 +15,12 @@ function WeeklyForecast() {
     setError(null);
 
     try {
-      const lat = 51.9167; // Replace with your desired latitude rn its mile end
-      const lon = 0.9; // Replace with your desired longitude rn its mile end
+      const locationString = getLocationFromLS();
+      const location = JSON.parse(locationString); // Parse the string back into an object
+      const lat = location.lat;
+      const lon = location.lon;
+      // const lat = 51.9167; // Replace with your desired latitude rn its mile end
+      // const lon = 0.9; // Replace with your desired longitude rn its mile end
       const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/London`;
 
       const response = await fetch(apiUrl);
