@@ -48,9 +48,8 @@ const HourlyForecast = () => {
       const lat = 51.9167; // Replace with your desired latitude
       const lon = 0.9; // Replace with your desired longitude
       const key = "28e0bac8d6e2712922db61d4a21b1902";
-      // const URL = `https://api.open-meteo.com/v1/forecast?latitude=${lat.toString()}&longitude=${lon.toString()}&hourly=temperature_2m`;
-      // const URL = `https://api.open-meteo.com/v1/forecast?latitude=${(lat)}&longitude=${(lon)}&hourly=temperature_2m`;
-      const URL = `https://history.openweathermap.org/data/2.5/history/city?id=2885679&type=hour&appid=28e0bac8d6e2712922db61d4a21b1902`;
+      //const URL = `https://history.openweathermap.org/data/2.5/history/city?id=2885679&type=hour&appid=28e0bac8d6e2712922db61d4a21b1902`;
+      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=51.9&lon=0.9&appid=28e0bac8d6e2712922db61d4a21b1902`
       try {
         const response = await fetch(URL);
         if (!response.ok) {
@@ -59,7 +58,9 @@ const HourlyForecast = () => {
         const data = await response.json();
         const currentTime = new Date();
         const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-        const filteredData = data.list.filter((item) => new Date(item.dt) <= next24Hours);
+        console.log(next24Hours)
+        const filteredData = data.list.filter((item) => new Date(item.dt_txt) <= next24Hours);
+        console.log(filteredData)
         setHourlyForecast(filteredData);
       } catch (error) {
         console.error("Error fetching hourly forecast data:", error);
@@ -82,7 +83,7 @@ const HourlyForecast = () => {
         hourlyForecast.map((item, index) => (
           <div className="time-block" key={index}>
             <p>{formatTime(item.dt * 1000)}</p>
-            <p>{(item.main.temp - 273.15).toFixed(2)}°C</p>
+            <p>{(item.main.temp - 273.15).toFixed(1)}°C</p>
           </div>
         ))
       ) : (
