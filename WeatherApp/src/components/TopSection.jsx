@@ -3,6 +3,7 @@ import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
+
 const WeatherApp = () => {
   const [location, setLocation] = useState();
   const [temperature, setTemperature] = useState(null);
@@ -129,6 +130,9 @@ const WeatherApp = () => {
   //     </div>
   //   );
   // };
+    const getIconPath = (iconName) => {
+      return `../images/icon/${iconName}.png`;
+    };
 
   return (
     <div className="container">
@@ -162,7 +166,7 @@ const WeatherApp = () => {
       <div className="content">
         <searchLocation onLocationChange={setLocation} />
         <div className="location">{searchedValue || searchInput}</div>
-        <div className="icon">{icon}</div>
+        <div className="icon">{icon && <img src={getIconPath(icon)}/>}</div>
         <div className="temperature">{temperature}</div>
         <div className="desc">{weatherDesc}</div>
       </div>
