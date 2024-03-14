@@ -11,7 +11,8 @@ const WeatherApp = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null); // Reference to the input field
   const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
-
+  const [weatherDesc, setWeatherDesc]= useState("");
+  const [icon, setIcon] = useState(null);
   useEffect(() => {
     // Hide search if the user clicks outside of the search area
     const handleClickOutside = (event) => {
@@ -20,8 +21,7 @@ const WeatherApp = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -32,20 +32,29 @@ const WeatherApp = () => {
         .then((data) => {
           // Filter for unique suggestions
           const uniqueSuggestions = data.filter((item, index, self) => {
-            const label = `${item.name}, ${item.country}${item.state ? `, ${item.state}` : ''}`;
-            return index === self.findIndex((s) => {
-              const sLabel = `${s.name}, ${s.country}${s.state ? `, ${s.state}` : ''}`;
-              return sLabel === label;
-            });
+            const label = `${item.name}, ${item.country}${
+              item.state ? `, ${item.state}` : ""
+            }`;
+            return (
+              index ===
+              self.findIndex((s) => {
+                const sLabel = `${s.name}, ${s.country}${
+                  s.state ? `, ${s.state}` : ""
+                }`;
+                return sLabel === label;
+              })
+            );
           });
-          setSuggestions(data.map((item) => {
-            // Construct the display label
-            let label = `${item.name}, ${item.country}`;
-            if (item.state) {
-              label += `, ${item.state}`;
-            }
-            return label;
-          }));
+          setSuggestions(
+            data.map((item) => {
+              // Construct the display label
+              let label = `${item.name}, ${item.country}`;
+              if (item.state) {
+                label += `, ${item.state}`;
+              }
+              return label;
+            })
+          );
         })
         .catch(() => setSuggestions([]));
     } else {
@@ -60,12 +69,12 @@ const WeatherApp = () => {
       fetch(GEO_URL)
         .then((response) => response.json())
         .then((data) => {
-          if (data.length > 0) { // Check if data is valid
+          if (data.length > 0) {
+            // Check if data is valid
             const lat = data[0].lat;
             const lon = data[0].lon;
             const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
             setLocationInLS(lat, lon);
-
             return fetch(weatherURL);
           } else {
             setLocation("Could not find location");
@@ -74,24 +83,24 @@ const WeatherApp = () => {
         })
         .then((response) => response.json())
         .then((weatherData) => {
-          // Enhanced display
+          console.log(weatherData)
+;          // Enhanced display
           setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
           setTemperature(weatherData.main.temp);
+          setWeatherDesc(weatherData.weather[0].description);
+          setIcon(weatherData.weather[0].icon);
         })
         .catch(() => {
           setLocation("Could not find location");
           setTemperature(null);
         });
     }
-    console.log(location)
+    console.log(location);
   }, [location]);
-
-
 
   const handleSearchClick = () => {
     setShowSearch(!showSearch);
   };
-
 
   const handleSuggestionClick = (suggestion) => {
     setSearchInput(suggestion);
@@ -100,34 +109,35 @@ const WeatherApp = () => {
     setShowSearch(true);
   };
 
-  const searchLocation = (event) => {
-    const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`;
+  // const searchLocation = (event) => {
+  //   const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`;
 
-    if (event.key === "Enter") {
-      fetch(`${GEO_URL}`)
-        .then((response) => response.json())
-        .then((response) => {
-          setLocationData(response);
-        });
-    }
-  };
+  //   if (event.key === "Enter") {
+  //     fetch(`${GEO_URL}`)
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         setLocationData(response);
+  //       });
+  //   }
+  // };
 
-  const TopSection = ({ temperature, location }) => {
-    return (
-      <div className="topSec">
-        <p className="location">{location}</p>
-        <p className="temperature">{temperature}</p>
-      </div>
-    );
-  };
+  // const TopSection = ({ temperature, location, weatherDesc}) => {
+  //   return (
+  //     <div className="topSec">
+  //       <p className="location">{location}</p>
+  //       <p className="temperature">{temperature}</p>
+  //     </div>
+  //   );
+  // };
 
   return (
-    <div className="container"> {/* Main container for layout */}
-    <button className="searchButton" onClick={handleSearchClick}>
-      {showSearch ? "Hide Search" : "Show Search"}
-    </button>
-
-    {showSearch && (
+    <div className="container">
+      {" "}
+      {/* Main container for layout */}
+      <button className="searchButton" onClick={handleSearchClick}>
+        {showSearch ? "Hide Search" : "Show Search"}
+      </button>
+      {showSearch && (
         <div className="searchBar">
           <input
             type="text"
@@ -138,7 +148,10 @@ const WeatherApp = () => {
           {suggestions.length > 0 && (
             <ul className="suggestions">
               {suggestions.map((suggestion, index) => (
-                <li key={suggestion} onClick={() => handleSuggestionClick(suggestion)}>
+                <li
+                  key={suggestion}
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
                   {suggestion}
                 </li>
               ))}
@@ -147,9 +160,11 @@ const WeatherApp = () => {
         </div>
       )}
       <div className="content">
-        <searchLocation onLocationChange={setLocation} /><div className="location">{searchedValue || searchInput}</div>
+        <searchLocation onLocationChange={setLocation} />
+        <div className="location">{searchedValue || searchInput}</div>
+        <div className="icon">{icon}</div>
         <div className="temperature">{temperature}</div>
-        
+        <div className="desc">{weatherDesc}</div>
       </div>
     </div>
   );

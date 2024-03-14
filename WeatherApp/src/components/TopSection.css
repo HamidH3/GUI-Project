@@ -25,6 +25,8 @@
   background-color: rgba(0, 0, 0, 0.7); 
   border-radius: 5px;
   z-index: 10; /* Ensure search bar is on top */
+  
+  
 }
 
 .content {
@@ -34,6 +36,7 @@
   align-items: center;   /* Align items horizontally to the center */
   padding: 20px; 
   z-index: 5;
+  
 }
 
 .temperature {
@@ -44,6 +47,9 @@
 
 .location {
   font-size: 24px;
+}
+.desc {
+  font-size: 19px;
 }
 
 .suggestions li { /* Assuming your <li> elements are within a container with the class 'suggestions' */
@@ -56,4 +62,5 @@
   margin: 0; /* Remove default margin */
   text-align: center; /* Center text within the list container */
   width: 100%; /* Allow list to take full width of search bar */
+    /* backdrop-filter: blur(20px); */
 }
