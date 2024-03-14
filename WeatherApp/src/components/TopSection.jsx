@@ -14,6 +14,7 @@ const WeatherApp = () => {
   const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
   const [weatherDesc, setWeatherDesc]= useState("");
   const [icon, setIcon] = useState(null);
+
   useEffect(() => {
     // Hide search if the user clicks outside of the search area
     const handleClickOutside = (event) => {
@@ -84,8 +85,8 @@ const WeatherApp = () => {
         })
         .then((response) => response.json())
         .then((weatherData) => {
-          console.log(weatherData)
-;          // Enhanced display
+          console.log(weatherData);
+          // Enhanced display
           setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
@@ -107,7 +108,7 @@ const WeatherApp = () => {
     setSearchInput(suggestion);
     setLocation(suggestion);
     setSearchedValue(suggestion); // Update searchedValue
-    setShowSearch(true);
+    setShowSearch(false);
   };
 
   // const searchLocation = (event) => {
@@ -166,8 +167,8 @@ const WeatherApp = () => {
       <div className="content">
         <searchLocation onLocationChange={setLocation} />
         <div className="location">{searchedValue || searchInput}</div>
-        <div className="icon">{icon && <img src={getIconPath(icon)}/>}</div>
         <div className="temperature">{temperature}</div>
+        <div className="icon"><img src= {`https://openweathermap.org/img/wn/${icon}@2x.png`} /></div>
         <div className="desc">{weatherDesc}</div>
       </div>
     </div>

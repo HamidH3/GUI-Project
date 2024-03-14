@@ -130,7 +130,7 @@ import "./weeklyForecast.css";
 import Popup from "../../routes/Popup";
 //import getWeather from "../../routes/Popup";
 import { getLocationFromLS } from "../functions/location";
-import {CSSTransition} from "react-transition-group";
+//import {CSSTransition} from "react-transition-group";
 
 
 function WeeklyForecast() {
