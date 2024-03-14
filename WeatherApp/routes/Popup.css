@@ -29,3 +29,8 @@
 color: white;
   border-radius: 5%;
 }
+
+
+.popup-enter{
+  transform: translateY(100%)
+}

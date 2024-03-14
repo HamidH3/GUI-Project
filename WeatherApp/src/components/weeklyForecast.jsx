@@ -129,9 +129,8 @@ import React, { useState, useEffect } from "react";
 import "./weeklyForecast.css";
 import Popup from "../../routes/Popup";
 //import getWeather from "../../routes/Popup";
-
 import { getLocationFromLS } from "../functions/location";
-
+import {CSSTransition} from "react-transition-group";
 
 
 function WeeklyForecast() {
@@ -144,7 +143,6 @@ function WeeklyForecast() {
   
   function buttonClickHandle(index){
     // set your selectedIndex
-    console.log("index clicked", index)
     setSelectedIndex(index);
     setButtonPopup(true);
     setSelectedDaysData(true);
@@ -205,7 +203,19 @@ function WeeklyForecast() {
         />
       )}
 
-      
+      {/* <CSSTransition
+      in= {buttonPopup}
+      timeout={500}
+      classNames={'popup'}
+      unmountOnExit/>
+       <Popup
+          onClose={() => setButtonPopup(false)}
+          // isVisible={true}
+          selectedDaysData={selectedDaysData}
+          selectedIndex={selectedIndex}
+        />
+      <CSSTransition/>
+         */}
 
       {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
       It also passes the selectedDaysData to the popup */}
