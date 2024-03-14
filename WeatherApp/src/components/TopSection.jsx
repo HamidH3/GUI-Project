@@ -3,7 +3,6 @@ import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
-
 const WeatherApp = () => {
   const [location, setLocation] = useState();
   const [temperature, setTemperature] = useState(null);
@@ -12,7 +11,7 @@ const WeatherApp = () => {
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null); // Reference to the input field
   const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
-  const [weatherDesc, setWeatherDesc]= useState("");
+  const [weatherDesc, setWeatherDesc] = useState("");
   const [icon, setIcon] = useState(null);
 
   useEffect(() => {
@@ -65,7 +64,24 @@ const WeatherApp = () => {
   }, [searchInput]);
 
   useEffect(() => {
-    if (location) {
+    if (!location) {
+      const mileEndLat = 51.5215; // Mile End's latitude
+      const mileEndLon = -0.0397; // Mile End's longitude
+      const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
+
+      fetch(weatherURL)
+        .then((response) => response.json())
+        .then((weatherData) => {
+          setLocation("Mile End, UK");
+          setTemperature(weatherData.main.temp);
+          setWeatherDesc(weatherData.weather[0].description);
+          setIcon(weatherData.weather[0].icon);
+        })
+        .catch(() => {
+          setLocation("Could not find location");
+          setTemperature(null);
+        });
+      }else{
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
       fetch(GEO_URL)
@@ -131,9 +147,9 @@ const WeatherApp = () => {
   //     </div>
   //   );
   // };
-    const getIconPath = (iconName) => {
-      return `../images/icon/${iconName}.png`;
-    };
+  // const getIconPath = (iconName) => {
+  //   return `../images/icon/${iconName}.png`;
+  // };
 
   return (
     <div className="container">
@@ -168,7 +184,9 @@ const WeatherApp = () => {
         <searchLocation onLocationChange={setLocation} />
         <div className="location">{searchedValue || searchInput}</div>
         <div className="temperature">{temperature}</div>
-        <div className="icon"><img src= {`https://openweathermap.org/img/wn/${icon}@2x.png`} /></div>
+        <div className="icon">
+          <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
+        </div>
         <div className="desc">{weatherDesc}</div>
       </div>
     </div>

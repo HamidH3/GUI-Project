@@ -46,6 +46,8 @@ const HourlyForecast = () => {
           <div className="time-block" key={index}>
             <p>{formatTime(item.dt * 1000)}</p>
             <p>{(item.main.temp - 273.15).toFixed(1)}°C</p>
+            {/* <div className="icon">
+              <img src= {`https://openweathermap.org/img/wn/${forecastData}@2x.png`} /></div> */}
           </div>
         ))
       ) : (
