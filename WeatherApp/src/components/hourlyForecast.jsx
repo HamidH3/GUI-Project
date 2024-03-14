@@ -12,7 +12,7 @@ const HourlyForecast = () => {
       const lat = location.lat;
       const lon = location.lon;
       const key = "28e0bac8d6e2712922db61d4a21b1902";
-      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${key}`
+      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${key}`;
       try {
         const response = await fetch(URL);
         if (!response.ok) {
@@ -20,8 +20,12 @@ const HourlyForecast = () => {
         }
         const data = await response.json();
         const currentTime = new Date();
-        const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-        const filteredData = data.list.filter((item) => new Date(item.dt_txt) <= next24Hours);
+        const next24Hours = new Date(
+          currentTime.getTime() + 24 * 60 * 60 * 1000
+        );
+        const filteredData = data.list.filter(
+          (item) => new Date(item.dt_txt) <= next24Hours
+        );
         setHourlyForecast(filteredData);
       } catch (error) {
         console.error("Error fetching hourly forecast data:", error);
@@ -38,16 +42,19 @@ const HourlyForecast = () => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
-
   return (
     <div className="hourly">
       {hourlyForecast.length > 0 ? (
-        hourlyForecast.map((item, index) => (
+        hourlyForecast.map((weatherData, index) => (
           <div className="time-block" key={index}>
-            <p>{formatTime(item.dt * 1000)}</p>
-            <p>{(item.main.temp - 273.15).toFixed(1)}°C</p>
-            {/* <div className="icon">
-              <img src= {`https://openweathermap.org/img/wn/${forecastData}@2x.png`} /></div> */}
+            <p>{formatTime(weatherData.dt * 1000)}</p>
+            <p>{(weatherData.main.temp - 273.15).toFixed(1)}°C</p>
+            <p className="img">
+              <img
+                src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+                style={{ width: "50px", height: "50px"}}
+              ></img>
+            </p>
           </div>
         ))
       ) : (

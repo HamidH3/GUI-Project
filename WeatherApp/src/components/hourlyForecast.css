@@ -4,6 +4,7 @@
   overflow-x: scroll;
   white-space: nowrap;
   display: flex;
+
 }
 
 .hourly::-webkit-scrollbar {
@@ -14,5 +15,5 @@
   padding: 3px;
   margin-right: 10px;
   background-color: rgba(139, 156, 132, 0.384);
-  border-radius: 5px;
+  border-radius: 20px;
 }

@@ -4,6 +4,7 @@ import Popup from "../../routes/Popup";
 //import getWeather from "../../routes/Popup";
 import { getLocationFromLS } from "../functions/location";
 //import {CSSTransition} from "react-transition-group";
+// import API_KEY from "../functions/location";
 
 
 function WeeklyForecast() {
@@ -35,6 +36,7 @@ function WeeklyForecast() {
       // const lat = 51.9167; // Replace with your desired latitude rn its mile end
       // const lon = 0.9; // Replace with your desired longitude rn its mile end
       const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/London`;
+      // const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${API_KEY}`
 
       const response = await fetch(apiUrl);
 
@@ -63,7 +65,7 @@ function WeeklyForecast() {
     return <p>Error: {error}</p>;
   }
 
-  console.log("selectedIndex:", selectedIndex)
+ 
   return (
     <div className="weekly-container">
       <h2>7-Day Forecast</h2>
@@ -108,6 +110,7 @@ function WeeklyForecast() {
               : currentDate.toLocaleDateString("en-US", { weekday: "long" });
             //assigns value of today to dayLabel if dayToday is true
             return (
+              
               // <button onClick={() => setButtonPopup(true)} key={day}>
               <button onClick={() => buttonClickHandle(index)} key={day}>
                 
