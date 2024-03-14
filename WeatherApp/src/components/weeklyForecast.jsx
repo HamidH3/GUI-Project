@@ -132,6 +132,8 @@ import Popup from "../../routes/Popup";
 
 import { getLocationFromLS } from "../functions/location";
 
+
+
 function WeeklyForecast() {
   const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,14 +141,16 @@ function WeeklyForecast() {
   const [buttonPopup, setButtonPopup] = useState(false); //initially, button pop is set to false and not visible, when pop up button is triggered, it changes state to true and when 'close' is clicked, it triggers the 'onClose', therefore closing the popup.
   const [selectedDaysData, setSelectedDaysData] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  function buttonClickHandle(index) {
+  
+  function buttonClickHandle(index){
     // set your selectedIndex
-    console.log("index clicked", index);
+    console.log("index clicked", index)
     setSelectedIndex(index);
     setButtonPopup(true);
     setSelectedDaysData(true);
   }
+
+
 
   const fetchWeatherData = async () => {
     setIsLoading(true);
@@ -188,7 +192,7 @@ function WeeklyForecast() {
     return <p>Error: {error}</p>;
   }
 
-  console.log("selectedIndex:", selectedIndex);
+  console.log("selectedIndex:", selectedIndex)
   return (
     <div className="weekly-container">
       <h2>7-Day Forecast</h2>
@@ -200,6 +204,8 @@ function WeeklyForecast() {
           selectedIndex={selectedIndex}
         />
       )}
+
+      
 
       {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
       It also passes the selectedDaysData to the popup */}
@@ -220,12 +226,13 @@ function WeeklyForecast() {
             return (
               // <button onClick={() => setButtonPopup(true)} key={day}>
               <button onClick={() => buttonClickHandle(index)} key={day}>
+                
                 <b>{dayLabel}</b>
                 <p className="details">
                   <span>
                     Rainfall: {forecastData.precipitation_sum[index]} mm
                   </span>
-
+                  
                   <span className="weather-icon">
                     <img
                       src={

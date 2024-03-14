@@ -40,19 +40,23 @@ const SearchBar = ({ onLocationChange }) => {
   );
 };
 
-const TopSection = ({ location, temperature }) => {
+const TopSection = ({ location, temperature, weatherDesc}) => {
   return (
     <div className="topSec">
       <p>{location}</p>
+      <p>icon</p>
       <p>{temperature}</p>
+      <p>{weatherDesc}</p>
     </div>
   );
 };
-
+//call geo location api. Then you fetch the response, and set the data ( lat and lon) to the
+//weather api. Then you set the location using setter method. After this you get the response
+//from the weather api and process the response, then get the weather 
 const WeatherApp = () => {
   const [location, setLocation] = useState();
   const [temperature, setTemperature] = useState(null);
-
+  const [weatherDesc, setWeatherDesc] = useState(null);
   useEffect(() => {
     if (location) {
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
@@ -68,6 +72,7 @@ const WeatherApp = () => {
         })
         .then((response) => response.json())
         .then((weatherData) => {
+          setWeatherDesc(weatherData.weather[0].description)
           setTemperature(weatherData.main.temp); //gets the temp for that location
         })
         .catch(() => {
@@ -80,7 +85,7 @@ const WeatherApp = () => {
   return (
     <div>
       <SearchBar onLocationChange={setLocation} />
-      <TopSection location={location} temperature={temperature} />
+      <TopSection location={location} temperature={temperature} weatherDesc={weatherDesc} />
     </div>
   );
 };
