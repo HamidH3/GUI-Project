@@ -1,14 +1,103 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
-const SearchBar = ({ onLocationChange }) => {
+const WeatherApp = () => {
+  const [location, setLocation] = useState();
+  const [temperature, setTemperature] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-  const [locationData, setLocationData] = useState();
+  const [showSearch, setShowSearch] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const searchRef = useRef(null); // Reference to the input field
+  const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
 
-  const handleSearchChange = (event) => {
-    setSearchInput(event.target.value);
+  useEffect(() => {
+    // Hide search if the user clicks outside of the search area
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSearch(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (searchInput.length > 2) {
+      const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=5&appid=${API_KEY}`;
+      fetch(GEO_URL)
+        .then((response) => response.json())
+        .then((data) => {
+          // Filter for unique suggestions
+          const uniqueSuggestions = data.filter((item, index, self) => {
+            const label = `${item.name}, ${item.country}${item.state ? `, ${item.state}` : ''}`;
+            return index === self.findIndex((s) => {
+              const sLabel = `${s.name}, ${s.country}${s.state ? `, ${s.state}` : ''}`;
+              return sLabel === label;
+            });
+          });
+          setSuggestions(data.map((item) => {
+            // Construct the display label
+            let label = `${item.name}, ${item.country}`;
+            if (item.state) {
+              label += `, ${item.state}`;
+            }
+            return label;
+          }));
+        })
+        .catch(() => setSuggestions([]));
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchInput]);
+
+  useEffect(() => {
+    if (location) {
+      const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
+      fetch(GEO_URL)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.length > 0) { // Check if data is valid
+            const lat = data[0].lat;
+            const lon = data[0].lon;
+            const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+            setLocationInLS(lat, lon);
+
+            return fetch(weatherURL);
+          } else {
+            setLocation("Could not find location");
+            setTemperature(null);
+          }
+        })
+        .then((response) => response.json())
+        .then((weatherData) => {
+          // Enhanced display
+          setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
+          setTemperature(weatherData.main.temp);
+        })
+        .catch(() => {
+          setLocation("Could not find location");
+          setTemperature(null);
+        });
+    }
+    console.log(location)
+  }, [location]);
+
+
+
+  const handleSearchClick = () => {
+    setShowSearch(!showSearch);
+  };
+
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchInput(suggestion);
+    setLocation(suggestion);
+    setSearchedValue(suggestion); // Update searchedValue
+    setShowSearch(true);
   };
 
   const searchLocation = (event) => {
@@ -23,176 +112,47 @@ const SearchBar = ({ onLocationChange }) => {
     }
   };
 
-  useEffect(() => {
-    onLocationChange(searchInput);
-  }, [locationData]);
+  const TopSection = ({ temperature, location }) => {
+    return (
+      <div className="topSec">
+        <p className="location">{location}</p>
+        <p className="temperature">{temperature}</p>
+      </div>
+    );
+  };
 
   return (
-    <div className="searchBar">
-      <input
-        type="text"
-        placeholder="Enter a location"
-        value={searchInput}
-        onChange={handleSearchChange}
-        onKeyPress={searchLocation}
-      />
-    </div>
-  );
-};
+    <div className="container"> {/* Main container for layout */}
+    <button className="searchButton" onClick={handleSearchClick}>
+      {showSearch ? "Hide Search" : "Show Search"}
+    </button>
 
-const TopSection = ({ location, temperature, weatherDesc}) => {
-  return (
-    <div className="topSec">
-      <p>{location}</p>
-      <p>icon</p>
-      <p>{temperature}</p>
-      <p>{weatherDesc}</p>
-    </div>
-  );
-};
-//call geo location api. Then you fetch the response, and set the data ( lat and lon) to the
-//weather api. Then you set the location using setter method. After this you get the response
-//from the weather api and process the response, then get the weather 
-const WeatherApp = () => {
-  const [location, setLocation] = useState();
-  const [temperature, setTemperature] = useState(null);
-  const [weatherDesc, setWeatherDesc] = useState(null);
-  useEffect(() => {
-    if (location) {
-      const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
-
-      fetch(GEO_URL)
-        .then((response) => response.json())
-        .then((data) => {
-          const lat = data[0].lat;
-          const lon = data[0].lon;
-          const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-          setLocationInLS(lat, lon);
-          return fetch(weatherURL);
-        })
-        .then((response) => response.json())
-        .then((weatherData) => {
-          setWeatherDesc(weatherData.weather[0].description)
-          setTemperature(weatherData.main.temp); //gets the temp for that location
-        })
-        .catch(() => {
-          setLocation("Could not find location")
-          (setTemperature(null));
-        });
-    }
-  }, [location]);
-
-  return (
-    <div>
-      <SearchBar onLocationChange={setLocation} />
-      <TopSection location={location} temperature={temperature} weatherDesc={weatherDesc} />
+    {showSearch && (
+        <div className="searchBar">
+          <input
+            type="text"
+            placeholder="Enter a location"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          {suggestions.length > 0 && (
+            <ul className="suggestions">
+              {suggestions.map((suggestion, index) => (
+                <li key={suggestion} onClick={() => handleSuggestionClick(suggestion)}>
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+      <div className="content">
+        <searchLocation onLocationChange={setLocation} /><div className="location">{searchedValue || searchInput}</div>
+        <div className="temperature">{temperature}</div>
+        
+      </div>
     </div>
   );
 };
 
 export default WeatherApp;
-
-
-
-
-
-
-
-
-
-
-
-//THIS IS DROP DOWN MENU ONE
-
-// import React, { useState, useEffect } from "react";
-// import "./TopSection.css";
-// import { API_KEY } from "../API";
-// import { setLocationInLS } from "../functions/location";
-
-// const SearchBar = ({ onLocationChange }) => {
-//   const [selectedLocation, setSelectedLocation] = useState("");
-//   const [locations, setLocations] = useState([]);
-
-//   useEffect(() => {
-//     // Fetch cities from the API
-//     const fetchCities = async () => {
-//       const response = await fetch(
-//         `http://api.openweathermap.org/geo/1.0/direct?limit=10&appid=${API_KEY}`
-//       );
-//       const data = await response.json();
-//       setLocations(data);
-//     };
-
-//     fetchCities();
-//   }, []);
-
-//   const handleLocationChange = (event) => {
-//     setSelectedLocation(event.target.value);
-//   };
-
-//   const handleSelectLocation = () => {
-//     onLocationChange(selectedLocation);
-//   };
-
-//   return (
-//     <div className="searchBar">
-//       <select value={selectedLocation} onChange={handleLocationChange}>
-//         <option value="">Select a location...</option>
-//         {Array.isArray(locations) &&
-//           locations.map((location) => (
-//             <option key={location.name} value={location.name}>
-//               {location.name}
-//             </option>
-//           ))}
-//       </select>
-//       <button onClick={handleSelectLocation}>Select</button>
-//     </div>
-//   );
-// };
-
-// const TopSection = ({ location, temperature }) => {
-//   return (
-//     <div className="topSec">
-//       <p>{location}</p>
-//       <p>{temperature}</p>
-//     </div>
-//   );
-// };
-
-// const WeatherApp = () => {
-//   const [location, setLocation] = useState();
-//   const [temperature, setTemperature] = useState(null);
-
-//   useEffect(() => {
-//     if (location) {
-//       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
-
-//       fetch(GEO_URL)
-//         .then((response) => response.json())
-//         .then((data) => {
-//           const lat = data[0].lat;
-//           const lon = data[0].lon;
-//           const weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-//           setLocationInLS(lat, lon);
-//           return fetch(weatherURL);
-//         })
-//         .then((response) => response.json())
-//         .then((weatherData) => {
-//           setTemperature(weatherData.main.temp); //gets the temp for that location
-//         })
-//         .catch(() => {
-//           setLocation("Could not find location");
-//           setTemperature(null);
-//         });
-//     }
-//   }, [location]);
-
-//   return (
-//     <div>
-//       <SearchBar onLocationChange={setLocation} />
-//       <TopSection location={location} temperature={temperature} />
-//     </div>
-//   );
-// };
-
-// export default WeatherApp;
