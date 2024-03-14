@@ -3,6 +3,7 @@ import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
+
 const WeatherApp = () => {
   const [location, setLocation] = useState();
   const [temperature, setTemperature] = useState(null);
@@ -130,6 +131,9 @@ const WeatherApp = () => {
   //     </div>
   //   );
   // };
+    const getIconPath = (iconName) => {
+      return `../images/icon/${iconName}.png`;
+    };
 
   return (
     <div className="container">
