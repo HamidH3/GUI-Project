@@ -21,9 +21,7 @@ const HourlyForecast = () => {
         const data = await response.json();
         const currentTime = new Date();
         const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000);
-        // console.log(next24Hours)
         const filteredData = data.list.filter((item) => new Date(item.dt_txt) <= next24Hours);
-        console.log(filteredData)
         setHourlyForecast(filteredData);
       } catch (error) {
         console.error("Error fetching hourly forecast data:", error);

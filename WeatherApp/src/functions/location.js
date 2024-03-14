@@ -6,3 +6,12 @@ export function setLocationInLS(lat, lon) {
     //stringify makes it into a string
     localStorage.setItem("location", location);
   }
+
+
+  export function getSelectedDayFromLS() {
+    return localStorage.getItem("selectedDay");
+  }
+
+  export function setSelectedDayInLS(selectedDay) {
+    localStorage.setItem("selectedDay", selectedDay);
+  }
