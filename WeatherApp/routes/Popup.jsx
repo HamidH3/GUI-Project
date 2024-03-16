@@ -68,7 +68,7 @@
 
 
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "./Popup.css";
 import { API_KEY } from "../src/API";
@@ -86,39 +86,61 @@ function getWeather(selectedDaysData, selectedIndex) {
   const location = JSON.parse(locationString); // Parse the string back into an object
   const lat = location.lat;
   const lon = location.lon;
- 
-  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+  const [temp, setTemp] = useState(''); 
+  const [humidity, setHumidity] = useState('');
+  const [tempMin, setTempMin] = useState('');
+  const [tempMax, setTempMax] = useState('');
+  const [pressure, setPressure] = useState('');
+  const [wind, setWind] = useState('');
+  const [weather, setWeather] = useState('');
+  const [icon, setIcon] = useState('');
 
+  const url = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+  
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      const weatherData = data.list[selectedIndex].main;
-      document.getElementById("weather").innerHTML = (
-        weatherData.temp
-      ).toFixed(1);
-      document.getElementById("humidity").innerHTML = weatherData.humidity;
+      const weatherData = data.list[selectedIndex];
+      setTemp((weatherData.temp.day).toFixed(0))
+      setHumidity(weatherData.humidity)
+      setTempMin((weatherData.temp.min).toFixed(0))
+      setTempMax((weatherData.temp.max).toFixed(0))
+      setPressure(weatherData.pressure)
+      setWind((weatherData.speed).toFixed(0))
+      setWind((weatherData.speed).toFixed(0))
+      setWeather(weatherData.weather[0].description)
+      setIcon(weatherData.weather[0].icon)
     })
     .catch((err) => console.log(err));
 
   var currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + selectedIndex);
-        //creates new date object
+  
   const today = new Date();
-        //creates new date object containing date and time
   const dayToday =
     currentDate.toDateString() === today.toDateString();
-  const dayLabel = dayToday
+  
+    const dayLabel = dayToday
     ? "Today"
     : currentDate.toLocaleDateString("en-US", { weekday: "long" });
-  // Return JSX
-  return (
+
+    return (
     <div>
-      {dayLabel}
-      <br />
-      <br />
-      Temperature: <span id="weather"></span>°C
-      <br />
-      Humidity: <span id="humidity"></span>%
+      <img
+        src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
+        style={{ width: "100px", height: "100px" }}
+      ></img>
+      
+      <h2>{dayLabel}</h2>
+      <h6>{weather}</h6>
+      
+      
+      <p>Temperature: <span>{temp}</span>°C</p>
+      <p>Humidity: <span>{humidity}</span>%</p>
+      <p>Min Temperature: <span>{tempMin}</span>°C</p>
+      <p>Max Temperature: <span>{tempMax}</span>°C</p>
+      <p>Average Pressure: <span>{pressure}</span> mbar</p>
+      <p>Wind: <span>{wind}</span> mph</p>
     </div>
   );
 }
@@ -130,6 +152,7 @@ function Popup({ onClose, isVisible, selectedDaysData, selectedIndex }) {
         Close
       </button>
       {selectedDaysData && getWeather(selectedDaysData, selectedIndex)}
+      
     </div>
   );
 }
