@@ -95,8 +95,6 @@ function getWeather(selectedDaysData, selectedIndex) {
   const [weather, setWeather] = useState('');
   const [icon, setIcon] = useState('');
 
-
-  
   const url = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
   
   fetch(url)
@@ -137,17 +135,12 @@ function getWeather(selectedDaysData, selectedIndex) {
       <h6>{weather}</h6>
       
       
-      Temperature: <span>{temp}</span>°C
-      <br/>
-      Humidity: <span>{humidity}</span>%
-      <br/>
-      Min Temperature: <span>{tempMin}</span>°C
-      <br/>
-      Max Temperature: <span>{tempMax}</span>°C
-      <br/>
-      Average Pressure: <span>{pressure}</span> mbar
-      <br/>
-      Wind: <span>{wind}</span> mph
+      <p>Temperature: <span>{temp}</span>°C</p>
+      <p>Humidity: <span>{humidity}</span>%</p>
+      <p>Min Temperature: <span>{tempMin}</span>°C</p>
+      <p>Max Temperature: <span>{tempMax}</span>°C</p>
+      <p>Average Pressure: <span>{pressure}</span> mbar</p>
+      <p>Wind: <span>{wind}</span> mph</p>
     </div>
   );
 }
@@ -159,6 +152,7 @@ function Popup({ onClose, isVisible, selectedDaysData, selectedIndex }) {
         Close
       </button>
       {selectedDaysData && getWeather(selectedDaysData, selectedIndex)}
+      
     </div>
   );
 }

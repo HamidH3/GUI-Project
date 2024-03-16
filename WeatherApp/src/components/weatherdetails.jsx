@@ -26,8 +26,12 @@ import "./weatherdetails.css";
 import { getLocationFromLS } from "../functions/location";
 
 const Weatherdetails = () => {
-  const [uvIndex, setUvIndex] = useState(null);
-  const [temperature, setTemperature] = useState(null);
+  const [temp, setTemp] = useState(''); 
+  const [humidity, setHumidity] = useState('');
+  const [tempMin, setTempMin] = useState('');
+  const [tempMax, setTempMax] = useState('');
+  const [pressure, setPressure] = useState('');
+  const [wind, setWind] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Weatherdetails = () => {
         const lat = location.lat;
         const lon = location.lon;
 
-        const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,uv_index_0`;
+        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=28e0bac8d6e2712922db61d4a21b1902&units=metric`;
 
         const response = await fetch(apiUrl);
         if (!response.ok) {
@@ -47,13 +51,20 @@ const Weatherdetails = () => {
         const data = await response.json();
 
         const currentDate = new Date().toISOString().split("T")[0];
-        const currentIndex = data.daily.time.indexOf(currentDate);
-        const uvIndexData = data.daily.uv_index_0[currentIndex];
-        const temperatureData = data.daily.temperature_2m_max[currentIndex];
 
-        setUvIndex(uvIndexData);
-        setTemperature(temperatureData);
+        const weatherData = data.list[0];
+
+        setTemp((weatherData.temp.day).toFixed(0))
+        setHumidity(weatherData.humidity)
+        setTempMin((weatherData.temp.min).toFixed(0))
+        setTempMax((weatherData.temp.max).toFixed(0))
+        setPressure(weatherData.pressure)
+        setWind((weatherData.speed).toFixed(0))
+        setWind((weatherData.speed).toFixed(0))
+        setWeather(weatherData.weather[0].description)
+        setIcon(weatherData.weather[0].icon)
         setLoading(false);
+
       } catch (error) {
         console.error("Error fetching weather data:", error);
         setLoading(false);
@@ -68,8 +79,12 @@ const Weatherdetails = () => {
       {loading && <p>Loading...</p>}
       {!loading && (
         <>
-          <p>UV Index: {uvIndex}</p>
-          <p>Temperature: {temperature}°C</p>
+        <p>Temperature: <span>{temp}</span>°C</p>
+        <p>Humidity: <span>{humidity}</span>%</p>
+        <p>Min Temperature: <span>{tempMin}</span>°C</p>
+        <p>Max Temperature: <span>{tempMax}</span>°C</p>
+        <p>Average Pressure: <span>{pressure}</span> mbar</p>
+        <p>Wind: <span>{wind}</span> mph</p>
         </>
       )}
     </div>
