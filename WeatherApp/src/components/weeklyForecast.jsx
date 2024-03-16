@@ -33,7 +33,6 @@ function WeeklyForecast() {
       const location = JSON.parse(locationString); // Parse the string back into an object
       const lat = location.lat;
       const lon = location.lon;
-      const key = "28e0bac8d6e2712922db61d4a21b1902";
       //const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${key}&units=metric`
       const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=28e0bac8d6e2712922db61d4a21b1902&units=metric`;
 
@@ -117,6 +116,12 @@ return (
             <button onClick={() => buttonClickHandle(index)} key={day}>
               <div class="center">
                 <b>{dayLabel}</b>
+                <p className="img">
+                    <img
+                      src={`https://openweathermap.org/img/wn/${forecastData.list[id].weather[0].icon}@2x.png`}
+                      style={{ width: "50px", height: "50px" }}
+                    ></img>
+                  </p>
                 <ul>
                   Max Temperature: {(forecastData.list[id].main.temp).toFixed(0)}°C
                 </ul>
