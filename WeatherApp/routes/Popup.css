@@ -34,3 +34,8 @@ color: white;
 .popup-enter{
   transform: translateY(100%)
 }
+
+.center {
+  text-align: center;
+  
+}

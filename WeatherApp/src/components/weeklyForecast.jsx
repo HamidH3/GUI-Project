@@ -4,7 +4,7 @@ import Popup from "../../routes/Popup";
 //import getWeather from "../../routes/Popup";
 import { getLocationFromLS } from "../functions/location";
 //import {CSSTransition} from "react-transition-group";
-// import API_KEY from "../functions/location";
+//import API_KEY from "../functions/location";
 
 
 function WeeklyForecast() {
@@ -33,10 +33,9 @@ function WeeklyForecast() {
       const location = JSON.parse(locationString); // Parse the string back into an object
       const lat = location.lat;
       const lon = location.lon;
-      // const lat = 51.9167; // Replace with your desired latitude rn its mile end
-      // const lon = 0.9; // Replace with your desired longitude rn its mile end
-      const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/London`;
-      // const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${API_KEY}`
+      const key = "28e0bac8d6e2712922db61d4a21b1902";
+      //const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${key}&units=metric`
+      const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=28e0bac8d6e2712922db61d4a21b1902&units=metric`;
 
       const response = await fetch(apiUrl);
 
@@ -45,7 +44,7 @@ function WeeklyForecast() {
       }
 
       const data = await response.json();
-      setForecastData(data.daily);
+      setForecastData(data);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -65,84 +64,73 @@ function WeeklyForecast() {
     return <p>Error: {error}</p>;
   }
 
- 
-  return (
-    <div className="weekly-container">
-      <h2>7-Day Forecast</h2>
-      {buttonPopup && (
-        <Popup
-          onClose={() => setButtonPopup(false)}
-          isVisible={true}
-          selectedDaysData={selectedDaysData}
-          selectedIndex={selectedIndex}
-        />
-      )}
 
-      {/* <CSSTransition
-      in= {buttonPopup}
-      timeout={500}
-      classNames={'popup'}
-      unmountOnExit/>
-       <Popup
-          onClose={() => setButtonPopup(false)}
-          // isVisible={true}
-          selectedDaysData={selectedDaysData}
-          selectedIndex={selectedIndex}
-        />
-      <CSSTransition/>
-         */}
+  
+let id = -1;
+return (
+  <div className="weekly-container">
+    <h2>7-Day Forecast</h2>
+    {buttonPopup && (
+      <Popup
+        onClose={() => setButtonPopup(false)}
+        isVisible={true}
+        selectedDaysData={selectedDaysData}
+        selectedIndex={selectedIndex}
+      />
+    )}
 
-      {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
-      It also passes the selectedDaysData to the popup */}
-      {forecastData && (
-        
-        <ul>
-          {forecastData.time.map((day, index) => {
-            const currentDate = new Date(day);
+    {/* <CSSTransition
+    in= {buttonPopup}
+    timeout={500}
+    classNames={'popup'}
+    unmountOnExit/>
+     <Popup
+        onClose={() => setButtonPopup(false)}
+        // isVisible={true}
+        selectedDaysData={selectedDaysData}
+        selectedIndex={selectedIndex}
+      />
+    <CSSTransition/>
+       */}
+
+    {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
+    It also passes the selectedDaysData to the popup */}
+
+
+    {[...Array(7)].map((day, index) => {
+      id += 1; 
+      //const currentDate = new Date(day);
+      var currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + index);
             //creates new date object
-            const today = new Date();
+      const today = new Date();
             //creates new date object containing date and time
-            const dayToday =
-              currentDate.toDateString() === today.toDateString();
-            //compares day to date to see if calender values are the same, returns true or false
-            const dayLabel = dayToday
-              ? "Today"
-              : currentDate.toLocaleDateString("en-US", { weekday: "long" });
-            //assigns value of today to dayLabel if dayToday is true
-            return (
-              
-              // <button onClick={() => setButtonPopup(true)} key={day}>
-              <button onClick={() => buttonClickHandle(index)} key={day}>
-                
+      const dayToday =
+        currentDate.toDateString() === today.toDateString();
+      const dayLabel = dayToday
+        ? "Today"
+        : currentDate.toLocaleDateString("en-US", { weekday: "long" });
+
+        return (
+        <div>          
+          {forecastData && (
+            <button onClick={() => buttonClickHandle(index)} key={day}>
+              <div class="center">
                 <b>{dayLabel}</b>
-                <p className="details">
-                  <span>
-                    Rainfall: {forecastData.precipitation_sum[index]} mm
-                  </span>
-                  
-                  <span className="weather-icon">
-                    <img
-                      src={
-                        forecastData.temperature_2m_max[index] > 14
-                          ? "./src/images/sunny.svg"
-                          : "./src/images/partly_cloudy.svg"
-                      }
-                      //  alt={forecastData.temperature_2m_max[index] > 15 ? "sunny-img" : "other-img"}
-                      style={{ width: "30px", height: "30px" }}
-                    />
-                  </span>
-                  <span>
-                    Max Temp: {forecastData.temperature_2m_max[index]}°C
-                  </span>
-                </p>
-                {/* <p>Min Temp: {forecastData.temperature_2m_min[index]}°C</p> */}
-              </button>
-            );
-          })}
-        </ul>
-      )}
-    </div>
-  );
+                <ul>
+                  Max Temperature: {(forecastData.list[id].main.temp).toFixed(0)}°C
+                </ul>
+                <ul>
+                  Humidity: {forecastData.list[id].main.humidity}%
+                </ul>
+              </div>
+            </button> 
+          )}
+        </div>
+      );
+    })}
+  </div>
+);
 }
 
 export default WeeklyForecast;
