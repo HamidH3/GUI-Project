@@ -75,8 +75,6 @@ import { API_KEY } from "../src/API";
 import { getLocationFromLS } from "../src/functions/location";
 
 function getWeather(selectedDaysData, selectedIndex) {
-  console.log("INDEX IN FILE =", selectedIndex);
-  console.log("selectedDaysData IN FILE =", selectedDaysData);
 
   // Return early if selectedDaysData is falsy
   if (!selectedDaysData) {
@@ -89,27 +87,38 @@ function getWeather(selectedDaysData, selectedIndex) {
   const lat = location.lat;
   const lon = location.lon;
  
-  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+  const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
       const weatherData = data.list[selectedIndex].main;
       document.getElementById("weather").innerHTML = (
-        weatherData.temp - 273.15
+        weatherData.temp
       ).toFixed(1);
       document.getElementById("humidity").innerHTML = weatherData.humidity;
     })
     .catch((err) => console.log(err));
 
+  var currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + selectedIndex);
+        //creates new date object
+  const today = new Date();
+        //creates new date object containing date and time
+  const dayToday =
+    currentDate.toDateString() === today.toDateString();
+  const dayLabel = dayToday
+    ? "Today"
+    : currentDate.toLocaleDateString("en-US", { weekday: "long" });
   // Return JSX
   return (
     <div>
-      DAY {selectedIndex + 1}
+      {dayLabel}
       <br />
-      Temperature: <span id="weather"></span>
       <br />
-      Humidity: <span id="humidity"></span>
+      Temperature: <span id="weather"></span>°C
+      <br />
+      Humidity: <span id="humidity"></span>%
     </div>
   );
 }
