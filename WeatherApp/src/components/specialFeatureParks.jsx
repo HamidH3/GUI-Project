@@ -5,6 +5,9 @@ import { getLocationFromLS } from "../functions/location";
 const SpecialFeatureParks = () => {
     const locationString = getLocationFromLS();
     const location = JSON.parse(locationString);
+    if(!location){
+        return
+    }
     const lat = location.lat;
     const lon = location.lon;
 
@@ -13,6 +16,8 @@ const SpecialFeatureParks = () => {
     const [error, setError] = useState(null);
 
     console.log("long/lat:", lon, lat)
+
+
 
     const findParks = async () => {
         if (!lat || !lon) {
@@ -76,7 +81,7 @@ const SpecialFeatureParks = () => {
     };
     return (
         <div className="details-container">
-            <button onClick={findParks}>Find Nearby Parks (Ways Only)</button>
+            <button onClick={findParks}>Find Nearby Parks</button>
             {error && <p className="error">{error}</p>}
             {isLoading && <p>Loading park data...</p>}
             {parks.length > 0 ? (
@@ -90,7 +95,7 @@ const SpecialFeatureParks = () => {
                          );
                     })}
                 </div>
-            ) : (!isLoading && <p>No parks (ways) found nearby.</p>)}
+            ) : (!isLoading && <p>No parks found nearby.</p>)}
         </div>
     );
 };
