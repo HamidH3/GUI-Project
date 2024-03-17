@@ -2,6 +2,7 @@ import React from "react";
 import "./BottomSection.css";
 import WeatherDetails from "./weatherdetails";
 import WeeklyForecast from "./weeklyForecast";
+import SpecialFeatureParks from "./specialFeatureParks";
 
 const BottomSection = () => {
   return (
@@ -13,6 +14,8 @@ const BottomSection = () => {
         <WeeklyForecast />
         <p></p>
         <WeatherDetails />
+        <p></p>
+        <SpecialFeatureParks />
       </div>
     </div>
   );

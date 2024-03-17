@@ -33,15 +33,13 @@ const WeatherApp = () => {
         .then((data) => {
           // Filter for unique suggestions
           const uniqueSuggestions = data.filter((item, index, self) => {
-            const label = `${item.name}, ${item.country}${
-              item.state ? `, ${item.state}` : ""
-            }`;
+            const label = `${item.name}, ${item.country}${item.state ? `, ${item.state}` : ""
+              }`;
             return (
               index ===
               self.findIndex((s) => {
-                const sLabel = `${s.name}, ${s.country}${
-                  s.state ? `, ${s.state}` : ""
-                }`;
+                const sLabel = `${s.name}, ${s.country}${s.state ? `, ${s.state}` : ""
+                  }`;
                 return sLabel === label;
               })
             );
@@ -81,7 +79,7 @@ const WeatherApp = () => {
           setLocation("Could not find location");
           setTemperature(null);
         });
-      }else{
+    } else {
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
       fetch(GEO_URL)
@@ -183,7 +181,7 @@ const WeatherApp = () => {
       <div className="content">
         <searchLocation onLocationChange={setLocation} />
         <div className="location">{searchedValue || searchInput}</div>
-        <div className="temperature">{temperature}</div>
+        <div className="temperature">{`${Math.round(temperature)}°C`}</div>
         <div className="icon">
           <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />
         </div>
