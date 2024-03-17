@@ -56,8 +56,8 @@ const HourlyForecast = () => {
       {hourlyForecast.length > 0 ? (
         hourlyForecast.map((weatherData, index) => (
           <div className="time-block" key={index}>
-            <p>{formatTime((weatherData.dt+timezone) * 1000)}</p>
-            <p>{(weatherData.main.temp).toFixed(1)}°C</p>
+            <p>{formatTime((weatherData.dt + timezone) * 1000)}</p>
+            <p>{Math.round(weatherData.main.temp)}°C</p> 
             <p className="img">
               <img
                 src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
