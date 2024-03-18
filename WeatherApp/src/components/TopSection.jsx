@@ -70,12 +70,13 @@ const WeatherApp = () => {
       fetch(weatherURL)
         .then((response) => response.json())
         .then((weatherData) => {
-          setLocation("Mile End, UK");
+          // setLocation(mileEndLat, mileEndLon);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
         .catch(() => {
+          console.log("second catch");
           setLocation("Could not find location");
           setTemperature(null);
         });
@@ -92,10 +93,13 @@ const WeatherApp = () => {
             const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
             setLocationInLS(lat, lon);
             return fetch(weatherURL);
-          } else {
-            setLocation("Could not find location");
-            setTemperature(null);
           }
+          //  else {
+          //   console.log("second catch");
+
+          //   setLocation("Could not find location");
+          //   setTemperature(null);
+          // }
         })
         .then((response) => response.json())
         .then((weatherData) => {
@@ -106,10 +110,12 @@ const WeatherApp = () => {
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-        .catch(() => {
-          setLocation("Could not find location");
-          setTemperature(null);
-        });
+        // .catch(() => {
+        //   console.log("thurd catch");
+
+        //   setLocation("Could not find location");
+        //   setTemperature(null);
+        // });
     }
     console.log(location);
   }, [location]);
