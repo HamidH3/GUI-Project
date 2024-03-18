@@ -126,13 +126,12 @@ function getWeather(selectedDaysData, selectedIndex) {
 
     return (
     <div>
+      <h2>{dayLabel}</h2>
       <img
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
         style={{ width: "100px", height: "100px" }}
       ></img>
-      
-      <h2>{dayLabel}</h2>
-      <h6>{weather}</h6>
+      <h4>{weather}</h4>
       
       
       <p>Temperature: <span>{temp}</span>°C</p>

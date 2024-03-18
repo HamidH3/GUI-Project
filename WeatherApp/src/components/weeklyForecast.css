@@ -34,9 +34,9 @@
   display: block;
   margin-bottom: 5px;
   color: white;
+  font-size: large;
 }
 
-.weekly-container button p {
-  margin: 0;
+.weekly-container button ul {
   color: white;
 }

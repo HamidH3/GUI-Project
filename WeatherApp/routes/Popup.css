@@ -16,18 +16,17 @@
   z-index: 1000;
   
 }
-.popup h1 {
-  position: auto;
-  padding: 32px;
-  max-width: 640px;
-  color: #ffffff;
+
+.popup h4 {
+  margin-top: 0;
+  font-weight: bolder;
 }
 
 .popup button {
   position: absolute;
   top: 20px;
   margin-left: 20px;
-color: white;
+  color: white;
   border-radius: 5%;
 }
 
