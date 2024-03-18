@@ -63,7 +63,7 @@ const HourlyForecast = () => {
     };
 
     getHourly();
-  }, [getLocationFromLS]);
+  }, [getLocationFromLS, location]);
   // window.location.reload();
 
   const formatTime = (timeString) => {

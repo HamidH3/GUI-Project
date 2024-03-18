@@ -96,7 +96,7 @@ try {
 }
   useEffect(() => {
     fetchWeatherData();
-  }, []);
+  }, [getLocationFromLS,location]);
 
   if (isLoading) {
     return <p>Loading...</p>;
