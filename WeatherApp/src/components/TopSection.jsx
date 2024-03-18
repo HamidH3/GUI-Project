@@ -87,7 +87,7 @@ const WeatherApp = () => {
             const lat = data[0].lat;
             const lon = data[0].lon;
             const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-            setLocationInLS(searchedValue);
+            setLocationInLS(location);
             console.log("suggestion in else: ",searchedValue);
             return fetch(weatherURL);
           }

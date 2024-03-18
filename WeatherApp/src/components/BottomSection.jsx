@@ -15,7 +15,7 @@ const BottomSection = () => {
         <p></p>
         <WeatherDetails />
         <p></p>
-        {/* <SpecialFeatureParks /> */}
+        <SpecialFeatureParks />
       </div>
     </div>
   );
