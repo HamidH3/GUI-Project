@@ -5,6 +5,7 @@ import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
 const WeatherApp = () => {
   const [location, setLocation] = useState();
+  const [coords, setCoords] =useState(getLocationFromLS());
   const [temperature, setTemperature] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -63,24 +64,25 @@ const WeatherApp = () => {
 
   useEffect(() => {
     if (!location) {
-      const mileEndLat = 51.5215; // Mile End's latitude
-      const mileEndLon = -0.0397; // Mile End's longitude
+      const mileEndLat = 51.5250913; // Mile End's latitude
+      const mileEndLon = -0.0350468; // Mile End's longitude
       const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
 
       fetch(weatherURL)
         .then((response) => response.json())
         .then((weatherData) => {
-          // setLocation(mileEndLat, mileEndLon);
+          setLocation(weatherData.name);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-        .catch(() => {
-          console.log("second catch");
-          setLocation("Could not find location");
-          setTemperature(null);
-        });
-    } else {
+        // .catch(() => {
+        //   console.log("first catch");
+        //   setLocation("Could not find location");
+        //   setTemperature(null);
+        // });
+    } 
+    else{
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
       fetch(GEO_URL)
@@ -117,16 +119,18 @@ const WeatherApp = () => {
         //   setTemperature(null);
         // });
     }
-    console.log(location);
-  }, [location]);
+    console.log("default loc", location);
+  }, [searchedValue]);
 
   const handleSearchClick = () => {
     setShowSearch(!showSearch);
   };
 
   const handleSuggestionClick = (suggestion) => {
+    console.log("sug", suggestion);
     setSearchInput(suggestion);
     setLocation(suggestion);
+    console.log("I pressed", location);
     setSearchedValue(suggestion); // Update searchedValue
     setShowSearch(false);
   };
@@ -174,7 +178,7 @@ const WeatherApp = () => {
             <ul className="suggestions">
               {suggestions.map((suggestion, index) => (
                 <li
-                  key={suggestion}
+                  key={`${suggestion}-${index}`}
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
@@ -185,8 +189,9 @@ const WeatherApp = () => {
         </div>
       )}
       <div className="content">
-        <searchLocation onLocationChange={setLocation} />
-        <div className="location">{searchedValue || searchInput}</div>
+        {/* <searchLocation onLocationChange={setLocation} /> */}
+        {/* <div className="location">{searchedValue || searchInput}</div> */}
+        <div className="location">{location}</div>
         <div className="temperature">{`${Math.round(temperature)}°C`}</div>
         <div className="icon">
           <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />

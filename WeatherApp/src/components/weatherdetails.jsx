@@ -59,10 +59,10 @@ const Weatherdetails = () => {
         setTempMin((weatherData.temp.min).toFixed(0))
         setTempMax((weatherData.temp.max).toFixed(0))
         setPressure(weatherData.pressure)
+        // setWind((weatherData.speed).toFixed(0))
         setWind((weatherData.speed).toFixed(0))
-        setWind((weatherData.speed).toFixed(0))
-        setWeather(weatherData.weather[0].description)
-        setIcon(weatherData.weather[0].icon)
+        // setWeather(weatherData.weather[0].description)
+        // setIcon(weatherData.weather[0].icon)
         setLoading(false);
 
       } catch (error) {
