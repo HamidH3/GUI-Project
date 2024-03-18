@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from "react";
 import "./hourlyForecast.css";
 import { getLocationFromLS } from "../functions/location";
+import {API_KEY} from "../API"
 
 const HourlyForecast = () => {
   const [hourlyForecast, setHourlyForecast] = useState([]);
   const [timezone, setTimezone] = useState('');
+  const[geoInfo, setGeoInfo] = useState();
 
   useEffect(() => {
     
     const getHourly = async () => {
       const locationString = getLocationFromLS();
-      const location = JSON.parse(locationString); // Parse the string back into an object
-      const lat = location.lat;
-      const lon = location.lon;
-      
+     const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${API_KEY}`;
 
-      const key = "28e0bac8d6e2712922db61d4a21b1902";
-      const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${key}&units=metric`;
+    //  fetch(GEO_URL)
+    //    .then((res) => res.json())
+    //    .then((data) => {
+    //      data = data[0];
+
+    //      setGeoInfo(data);
+    //    });
+    //     const lat = geoInfo.lat;
+    //     const lon = geoInfo.lon;
+
+     
+    //   const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
       
 
       
       try {
+           const result = await fetch(GEO_URL);
+
+             if (!result.ok) {
+               throw new Error("Failed to fetch location data");
+             }
+             const info = await result.json();
+             const lat = info[0].lat;
+             const lon = info[0].lon;
+
+           const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+      
+
         const response = await fetch(URL);
         if (!response.ok) {
           throw new Error("Failed to fetch hourly forecast data");

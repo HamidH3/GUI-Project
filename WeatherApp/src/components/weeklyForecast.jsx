@@ -4,7 +4,7 @@ import Popup from "../../routes/Popup";
 //import getWeather from "../../routes/Popup";
 import { getLocationFromLS } from "../functions/location";
 //import {CSSTransition} from "react-transition-group";
-//import API_KEY from "../functions/location";
+import {API_KEY} from "../API";
 
 function WeeklyForecast() {
   const [forecastData, setForecastData] = useState(null);
@@ -13,6 +13,7 @@ function WeeklyForecast() {
   const [buttonPopup, setButtonPopup] = useState(false); //initially, button pop is set to false and not visible, when pop up button is triggered, it changes state to true and when 'close' is clicked, it triggers the 'onClose', therefore closing the popup.
   const [selectedDaysData, setSelectedDaysData] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const[geoInfo, setGeoInfo] = useState();
 
   function buttonClickHandle(index) {
     // set your selectedIndex
@@ -25,29 +26,74 @@ function WeeklyForecast() {
     setIsLoading(true);
     setError(null);
 
-    try {
-      const locationString = getLocationFromLS();
-      const location = JSON.parse(locationString); // Parse the string back into an object
-      const lat = location.lat;
-      const lon = location.lon;
-      //const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${key}&units=metric`
-      const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=28e0bac8d6e2712922db61d4a21b1902&units=metric`;
+  //   try {
+  //     const locationString = getLocationFromLS();
+  //     const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${API_KEY}`;
 
-      const response = await fetch(apiUrl);
+  //     fetch(GEO_URL)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         data = data[0];
 
+  //         setGeoInfo(data);
+  //           const lat = geoInfo.lat;
+  //           const lon = geoInfo.lon;
+  //       })
+  //       .catch((err) => console.log("error haha",err));
+      
+  //     //const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=7&appid=${key}&units=metric`
+  //     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=28e0bac8d6e2712922db61d4a21b1902&units=metric`;
+
+  //     const response = await fetch(apiUrl);
+
+  //     if (!response.ok) {
+  //       throw new Error("Error fetching weather data");
+  //     }
+
+  //     const data = await response.json();
+  //     setForecastData(data);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+try {
+  const locationString = getLocationFromLS();
+  const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${API_KEY}`;
+
+  fetch(GEO_URL)
+    .then((res) => res.json())
+    .then((data) => {
+      data = data[0];
+      setGeoInfo(data);
+
+      const lat = data.lat;
+      const lon = data.lon;
+      const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+
+      return fetch(apiUrl);
+    })
+    .then((response) => {
       if (!response.ok) {
         throw new Error("Error fetching weather data");
       }
-
-      const data = await response.json();
+      return response.json();
+    })
+    .then((data) => {
       setForecastData(data);
-    } catch (error) {
+    })
+    .catch((error) => {
       setError(error.message);
-    } finally {
+    })
+    .finally(() => {
       setIsLoading(false);
-    }
-  };
-
+    });
+} catch (error) {
+  setError(error.message);
+  setIsLoading(false);
+}
+}
   useEffect(() => {
     fetchWeatherData();
   }, []);
@@ -59,6 +105,7 @@ function WeeklyForecast() {
   if (error) {
     return <p>Error: {error}</p>;
   }
+  
 
   let id = -1;
   return (
@@ -72,23 +119,6 @@ function WeeklyForecast() {
           selectedIndex={selectedIndex}
         />
       )}
-
-      {/* <CSSTransition
-    in= {buttonPopup}
-    timeout={500}
-    classNames={'popup'}
-    unmountOnExit/>
-     <Popup
-        onClose={() => setButtonPopup(false)}
-        // isVisible={true}
-        selectedDaysData={selectedDaysData}
-        selectedIndex={selectedIndex}
-      />
-    <CSSTransition/>
-       */}
-
-      {/* checks 'buttonPopup' state variable. if true, it renders popup component, then it passes through the onClose function that sets the buttonPopup to false if it is called by pressing close button.
-    It also passes the selectedDaysData to the popup */}
 
       {[...Array(7)].map((day, index) => {
         id += 1;

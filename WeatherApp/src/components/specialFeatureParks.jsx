@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import "./specialFeatureParks.css";
 import { getLocationFromLS } from "../functions/location";
+import {API_KEY} from "../API";
 
 const SpecialFeatureParks = () => {
-    const locationString = getLocationFromLS();
-    const location = JSON.parse(locationString);
-    if(!location){
-        return
-    }
-    const lat = location.lat;
-    const lon = location.lon;
-
     const [parks, setParks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [geoInfo, setGeoInfo] = useState();
+
+     const locationString = getLocationFromLS();
+     const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${locationString}&limit=1&appid=${API_KEY}`;
+
+     fetch(GEO_URL)
+       .then((res) => res.json())
+       .then((data) => {
+         data = data[0];
+
+         setGeoInfo(data);
+       });
+     const lat = geoInfo.lat;
+     const lon = geoInfo.lon;
 
     console.log("long/lat:", lon, lat)
 

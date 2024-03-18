@@ -4,8 +4,7 @@ import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
 const WeatherApp = () => {
-  const [location, setLocation] = useState();
-  const [coords, setCoords] =useState(getLocationFromLS());
+  const [location, setLocation] = useState(getLocationFromLS());
   const [temperature, setTemperature] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -14,6 +13,7 @@ const WeatherApp = () => {
   const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
   const [weatherDesc, setWeatherDesc] = useState("");
   const [icon, setIcon] = useState(null);
+  
 
   useEffect(() => {
     // Hide search if the user clicks outside of the search area
@@ -76,11 +76,6 @@ const WeatherApp = () => {
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-        // .catch(() => {
-        //   console.log("first catch");
-        //   setLocation("Could not find location");
-        //   setTemperature(null);
-        // });
     } 
     else{
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
@@ -89,35 +84,23 @@ const WeatherApp = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.length > 0) {
-            // Check if data is valid
             const lat = data[0].lat;
             const lon = data[0].lon;
             const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-            setLocationInLS(lat, lon);
+            setLocationInLS(searchedValue);
+            console.log("suggestion in else: ",searchedValue);
             return fetch(weatherURL);
           }
-          //  else {
-          //   console.log("second catch");
-
-          //   setLocation("Could not find location");
-          //   setTemperature(null);
-          // }
         })
         .then((response) => response.json())
         .then((weatherData) => {
           console.log(weatherData);
-          // Enhanced display
           setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-        // .catch(() => {
-        //   console.log("thurd catch");
 
-        //   setLocation("Could not find location");
-        //   setTemperature(null);
-        // });
     }
     console.log("default loc", location);
   }, [searchedValue]);
@@ -131,38 +114,14 @@ const WeatherApp = () => {
     setSearchInput(suggestion);
     setLocation(suggestion);
     console.log("I pressed", location);
-    setSearchedValue(suggestion); // Update searchedValue
+    setSearchedValue(suggestion);
     setShowSearch(false);
   };
+  
 
-  // const searchLocation = (event) => {
-  //   const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`;
-
-  //   if (event.key === "Enter") {
-  //     fetch(`${GEO_URL}`)
-  //       .then((response) => response.json())
-  //       .then((response) => {
-  //         setLocationData(response);
-  //       });
-  //   }
-  // };
-
-  // const TopSection = ({ temperature, location, weatherDesc}) => {
-  //   return (
-  //     <div className="topSec">
-  //       <p className="location">{location}</p>
-  //       <p className="temperature">{temperature}</p>
-  //     </div>
-  //   );
-  // };
-  // const getIconPath = (iconName) => {
-  //   return `../images/icon/${iconName}.png`;
-  // };
 
   return (
     <div className="container">
-      {" "}
-      {/* Main container for layout */}
       <button className="searchButton" onClick={handleSearchClick}>
         {showSearch ? "Hide Search" : "Show Search"}
       </button>
@@ -189,8 +148,6 @@ const WeatherApp = () => {
         </div>
       )}
       <div className="content">
-        {/* <searchLocation onLocationChange={setLocation} /> */}
-        {/* <div className="location">{searchedValue || searchInput}</div> */}
         <div className="location">{location}</div>
         <div className="temperature">{`${Math.round(temperature)}°C`}</div>
         <div className="icon">
