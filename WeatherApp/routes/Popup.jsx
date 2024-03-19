@@ -107,7 +107,6 @@ function getWeather(selectedDaysData, selectedIndex) {
       setTempMax((weatherData.temp.max).toFixed(0))
       setPressure(weatherData.pressure)
       setWind((weatherData.speed).toFixed(0))
-      setWind((weatherData.speed).toFixed(0))
       setWeather(weatherData.weather[0].description)
       setIcon(weatherData.weather[0].icon)
     })
