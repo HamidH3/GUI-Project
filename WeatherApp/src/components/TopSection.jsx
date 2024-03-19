@@ -5,11 +5,11 @@ import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
 const WeatherApp = ({location}) => {
   const [temperature, setTemperature] = useState(null);
-  const [searchInput, setSearchInput] = useState("");
+  /* const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null); // Reference to the input field
-  const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
+  const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion */
   const [weatherDesc, setWeatherDesc] = useState("");
   const [icon, setIcon] = useState(null);
 

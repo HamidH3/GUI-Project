@@ -1,31 +1,9 @@
-// import React from "react";
-// import "./weatherdetails.css";
-
-
-
-// const Weatherdetails = () => {
-//   return (
-//     <div className="details-container">
-//       <h3>weather details</h3>
-     
-//       <p>
-//         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam eaque
-//         repudiandae nostrum ratione. Nemo laborum accusantium porro at enim,
-//         quam magnam fugiat vero natus, itaque quaerat, pariatur obcaecati!
-//         Doloribus, consectetur!
-//       </p>
-//     </div>
-//   );
-// };
-
-// Weatherdetails.propTypes = {};
-
-// export default Weatherdetails;
 import React, { useState, useEffect } from "react";
 import "./weatherdetails.css";
-import { getLocationFromLS } from "../functions/location";
+import { getLocationFromLS, setLocationInLS } from "../functions/location";
+import { API_KEY } from "../API";
 
-const Weatherdetails = () => {
+const Weatherdetails = ( {location} ) => {
   const [temp, setTemp] = useState(''); 
   const [humidity, setHumidity] = useState('');
   const [tempMin, setTempMin] = useState('');
@@ -35,7 +13,57 @@ const Weatherdetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
+    if (!location) {
+      const mileEndLat = 51.5215; // Mile End's latitude
+      const mileEndLon = -0.0397; // Mile End's longitude
+      const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
+
+      fetch(weatherURL)
+        .then((response) => response.json())
+        .then((weatherData) => {
+          setTemp((weatherData.list[0].temp.day))
+          setHumidity(weatherData.list[0].humidity)
+          setTempMin((weatherData.list[0].temp.min))
+          setTempMax((weatherData.list[0].temp.max))
+          setPressure(weatherData.list[0].pressure)
+          setWind((weatherData.list[0].speed))
+          setLoading(false);
+        })
+        .catch(() => {
+          console.log("second catch");
+        });
+    } else {
+      const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
+      fetch(GEO_URL)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.length > 0) {
+            // Check if data is valid
+            const lat = data[0].lat;
+            const lon = data[0].lon;
+            const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+            setLocationInLS(lat, lon);
+            return fetch(weatherURL);
+          }
+        })
+        .then((response) => response.json())
+        .then((weatherData) => {
+          console.log(weatherData);
+          // Enhanced display
+          setTemp((weatherData.list[0].temp.day))
+          setHumidity(weatherData.list[0].humidity)
+          setTempMin((weatherData.list[0].temp.min))
+          setTempMax((weatherData.list[0].temp.max))
+          setPressure(weatherData.list[0].pressure)
+          setWind((weatherData.list[0].speed))
+          setLoading(false);
+        })
+    }
+    console.log(location);
+  }, [location]);
+    
+    /* const fetchWeatherData = async () => {
       try {
         const locationString = getLocationFromLS();
         const location = JSON.parse(locationString);
@@ -61,8 +89,6 @@ const Weatherdetails = () => {
         setPressure(weatherData.pressure)
         setWind((weatherData.speed).toFixed(0))
         setWind((weatherData.speed).toFixed(0))
-        setWeather(weatherData.weather[0].description)
-        setIcon(weatherData.weather[0].icon)
         setLoading(false);
 
       } catch (error) {
@@ -71,7 +97,7 @@ const Weatherdetails = () => {
       }
     };
     fetchWeatherData();
-  }, []);
+  }, []); */
 
   return (
     <div className="details-container">

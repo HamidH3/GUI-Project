@@ -8,11 +8,6 @@ const HourlyForecast = ({location}) => {
   const [hourlyForecast, setHourlyForecast] = useState([]);
   const [timezone, setTimezone] = useState('');
 
-  console.log(location);
-  location = String(location);
-  const city = location.split(",")[0].trim();
-  console.log(city);
-
   useEffect(() => {
       /* const locationString = getLocationFromLS();
       const location = JSON.parse(locationString); // Parse the string back into an object
@@ -42,7 +37,6 @@ const HourlyForecast = ({location}) => {
           })
           .catch(() => {
             console.log("second catch");
-            setTemperature(null);
           });
       } else {
         const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
@@ -58,12 +52,6 @@ const HourlyForecast = ({location}) => {
               setLocationInLS(lat, lon);
               return fetch(weatherURL);
             }
-            //  else {
-            //   console.log("second catch");
-  
-            //   setLocation("Could not find location");
-            //   setTemperature(null);
-            // }
           })
           .then((response) => response.json())
           .then((weatherData) => {
@@ -78,12 +66,6 @@ const HourlyForecast = ({location}) => {
           setHourlyForecast(filteredData);
           setTimezone(weatherData.city.timezone);
           })
-          // .catch(() => {
-          //   console.log("third catch");
-  
-          //   setLocation("Could not find location");
-          //   setTemperature(null);
-          // });
       }
       console.log(location);
     }, [location]);
