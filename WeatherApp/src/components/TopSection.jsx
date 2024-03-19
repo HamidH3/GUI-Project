@@ -91,7 +91,6 @@ const WeatherApp = ({location}) => {
 
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
-
       fetch(GEO_URL)
         .then((response) => response.json())
         .then((data) => {
