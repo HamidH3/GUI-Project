@@ -76,9 +76,10 @@ const WeatherApp = () => {
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-    } 
+    }
     else{
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
 
       fetch(GEO_URL)
         .then((response) => response.json())
