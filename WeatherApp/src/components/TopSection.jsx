@@ -116,6 +116,9 @@ const WeatherApp = () => {
     console.log("I pressed", location);
     setSearchedValue(suggestion);
     setShowSearch(false);
+    setTimeout(() => {
+      window.location.reload(); //Reloads page after 0.5s of selecting a city
+    }, 500);
   };
   
 
@@ -141,6 +144,7 @@ const WeatherApp = () => {
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
+                  
                 </li>
               ))}
             </ul>
