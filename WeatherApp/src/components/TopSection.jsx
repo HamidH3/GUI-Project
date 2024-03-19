@@ -79,12 +79,18 @@ const WeatherApp = ({location}) => {
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
-        .catch(() => {
-          console.log("second catch");
-          setTemperature(null);
-        });
+// <<<<<<< ec22566
+//         .catch(() => {
+//           console.log("second catch");
+//           setTemperature(null);
+//         });
     } else {
+
+    }
+    else{
+
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
 
       fetch(GEO_URL)
         .then((response) => response.json())
