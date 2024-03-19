@@ -154,6 +154,7 @@ const WeatherApp = () => {
   // const getIconPath = (iconName) => {
   //   return `../images/icon/${iconName}.png`;
   // };
+  //
 
   return (
     <div className="container">
