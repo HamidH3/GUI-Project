@@ -3,7 +3,7 @@
   display: flex; /* Use flexbox for positioning */
   justify-content: center;
   align-items: center;
-  height: 30vh; /* Center elements within the viewport */
+  height: 25vh; /* Center elements within the viewport */
 }
 
 .searchButton {
@@ -25,7 +25,6 @@
   background-color: rgba(0, 0, 0, 0.7); 
   border-radius: 5px;
   z-index: 10; /* Ensure search bar is on top */
-  
   
 }
 

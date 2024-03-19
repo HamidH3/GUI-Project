@@ -4,18 +4,21 @@ import WeatherDetails from "./weatherdetails";
 import WeeklyForecast from "./weeklyForecast";
 import SpecialFeatureParks from "./specialFeatureParks";
 
-const BottomSection = () => {
+const BottomSection = ({location}) => {
+  console.log(location);
+  
   return (
     <div className="bottomSec">
       {/* <p>bottom</p> */}
       {/* Should include vertical scroller with extra info */}
+      
 
       <div className="bottomComponent">
-        <WeeklyForecast />
+        <WeeklyForecast location = {location}/>
         <p></p>
-        <WeatherDetails />
+        <WeatherDetails location = {location}/>
         <p></p>
-        <SpecialFeatureParks />
+        <SpecialFeatureParks location = {location}/>
       </div>
     </div>
   );

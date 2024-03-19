@@ -1,10 +1,13 @@
-.weekly-container {
-  padding: 10px;
-  border-radius: 20px;
-  /* width:80%; */
-  width: 350px;
-  margin: auto;
-  background-color: rgba(139, 156, 132, 0.384);
+.weekly-container{
+
+    padding: 10px;
+    border-radius: 20px;
+    /* width:80%; */
+    width: 350px;
+    margin: auto;
+    background-color:rgba(139, 156, 132, 0.384);
+    
+
 }
 
 .weekly-container ul {
@@ -16,8 +19,8 @@
   display: block;
   width: 100%;
   text-align: left;
-  margin-bottom: 5px;
-  padding: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -31,18 +34,9 @@
   display: block;
   margin-bottom: 5px;
   color: white;
+  font-size: large;
 }
 
-.weekly-container button p {
-  margin: 0;
+.weekly-container button ul {
   color: white;
-}
-
-.center {
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #ccc;
-  border-color: #cccccc76;
 }

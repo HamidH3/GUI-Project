@@ -3,19 +3,23 @@ import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
-const WeatherApp = () => {
-  const [location, setLocation] = useState(getLocationFromLS());
+const WeatherApp = ({location}) => {
   const [temperature, setTemperature] = useState(null);
-  const [searchInput, setSearchInput] = useState("");
+  /* const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const searchRef = useRef(null); // Reference to the input field
-  const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion
+  const [searchedValue, setSearchedValue] = useState(null); // State to store the last clicked suggestion */
   const [weatherDesc, setWeatherDesc] = useState("");
   const [icon, setIcon] = useState(null);
-  
 
-  useEffect(() => {
+  if (location == null) {
+    location = "Mile End, GB"
+  }
+
+  console.log(location);
+
+  /* useEffect(() => {
     // Hide search if the user clicks outside of the search area
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -60,24 +64,31 @@ const WeatherApp = () => {
     } else {
       setSuggestions([]);
     }
-  }, [searchInput]);
+  }, [searchInput]); */
 
   useEffect(() => {
     if (!location) {
-      const mileEndLat = 51.5250913; // Mile End's latitude
-      const mileEndLon = -0.0350468; // Mile End's longitude
+      const mileEndLat = 51.5215; // Mile End's latitude
+      const mileEndLon = -0.0397; // Mile End's longitude
       const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
 
       fetch(weatherURL)
         .then((response) => response.json())
         .then((weatherData) => {
-          setLocation(weatherData.name);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
+// <<<<<<< ec22566
+//         .catch(() => {
+//           console.log("second catch");
+//           setTemperature(null);
+//         });
+    } else {
+
     }
     else{
+
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
 
@@ -85,45 +96,79 @@ const WeatherApp = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.length > 0) {
+            // Check if data is valid
             const lat = data[0].lat;
             const lon = data[0].lon;
             const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-            setLocationInLS(location);
-            console.log("suggestion in else: ",searchedValue);
+            setLocationInLS(lat, lon);
             return fetch(weatherURL);
           }
+          //  else {
+          //   console.log("second catch");
+
+          //   setLocation("Could not find location");
+          //   setTemperature(null);
+          // }
         })
         .then((response) => response.json())
         .then((weatherData) => {
           console.log(weatherData);
-          setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
+          // Enhanced display
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
+        // .catch(() => {
+        //   console.log("third catch");
 
+        //   setLocation("Could not find location");
+        //   setTemperature(null);
+        // });
     }
-    console.log("default loc", location);
-  }, [searchedValue]);
+    console.log(location);
+  }, [location]);
 
-  const handleSearchClick = () => {
+  /* const handleSearchClick = () => {
     setShowSearch(!showSearch);
   };
 
   const handleSuggestionClick = (suggestion) => {
-    console.log("sug", suggestion);
     setSearchInput(suggestion);
     setLocation(suggestion);
-    console.log("I pressed", location);
-    setSearchedValue(suggestion);
-    setShowSearch(false);
-  };
-  
+    setSearchedValue(suggestion); // Update searchedValue
+    setShowSearch(false); 
+  }; */
 
+  // const searchLocation = (event) => {
+  //   const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`;
+
+  //   if (event.key === "Enter") {
+  //     fetch(`${GEO_URL}`)
+  //       .then((response) => response.json())
+  //       .then((response) => {
+  //         setLocationData(response);
+  //       });
+  //   }
+  // };
+
+  // const TopSection = ({ temperature, location, weatherDesc}) => {
+  //   return (
+  //     <div className="topSec">
+  //       <p className="location">{location}</p>
+  //       <p className="temperature">{temperature}</p>
+  //     </div>
+  //   );
+  // };
+  // const getIconPath = (iconName) => {
+  //   return `../images/icon/${iconName}.png`;
+  // };
+  //
 
   return (
     <div className="container">
-      <button className="searchButton" onClick={handleSearchClick}>
+      {" "}
+      {/* Main container for layout */}
+      {/* <button className="searchButton" onClick={handleSearchClick}>
         {showSearch ? "Hide Search" : "Show Search"}
       </button>
       {showSearch && (
@@ -138,7 +183,7 @@ const WeatherApp = () => {
             <ul className="suggestions">
               {suggestions.map((suggestion, index) => (
                 <li
-                  key={`${suggestion}-${index}`}
+                  key={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
                 >
                   {suggestion}
@@ -147,7 +192,7 @@ const WeatherApp = () => {
             </ul>
           )}
         </div>
-      )}
+              )} */}
       <div className="content">
         <div className="location">{location}</div>
         <div className="temperature">{`${Math.round(temperature)}°C`}</div>
