@@ -3,8 +3,7 @@ import "./TopSection.css";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
-const WeatherApp = () => {
-  const [location, setLocation] = useState();
+const WeatherApp = ({location}) => {
   const [temperature, setTemperature] = useState(null);
   const [searchInput, setSearchInput] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -14,7 +13,13 @@ const WeatherApp = () => {
   const [weatherDesc, setWeatherDesc] = useState("");
   const [icon, setIcon] = useState(null);
 
-  useEffect(() => {
+  if (location == null) {
+    location = "Mile End, GB"
+  }
+
+  console.log(location);
+
+  /* useEffect(() => {
     // Hide search if the user clicks outside of the search area
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -59,7 +64,7 @@ const WeatherApp = () => {
     } else {
       setSuggestions([]);
     }
-  }, [searchInput]);
+  }, [searchInput]); */
 
   useEffect(() => {
     if (!location) {
@@ -70,14 +75,12 @@ const WeatherApp = () => {
       fetch(weatherURL)
         .then((response) => response.json())
         .then((weatherData) => {
-          // setLocation(mileEndLat, mileEndLon);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
         .catch(() => {
           console.log("second catch");
-          setLocation("Could not find location");
           setTemperature(null);
         });
     } else {
@@ -105,13 +108,12 @@ const WeatherApp = () => {
         .then((weatherData) => {
           console.log(weatherData);
           // Enhanced display
-          setLocation(`${weatherData.name}, ${weatherData.sys.country}`);
           setTemperature(weatherData.main.temp);
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
         })
         // .catch(() => {
-        //   console.log("thurd catch");
+        //   console.log("third catch");
 
         //   setLocation("Could not find location");
         //   setTemperature(null);
@@ -120,7 +122,7 @@ const WeatherApp = () => {
     console.log(location);
   }, [location]);
 
-  const handleSearchClick = () => {
+  /* const handleSearchClick = () => {
     setShowSearch(!showSearch);
   };
 
@@ -128,8 +130,8 @@ const WeatherApp = () => {
     setSearchInput(suggestion);
     setLocation(suggestion);
     setSearchedValue(suggestion); // Update searchedValue
-    setShowSearch(false);
-  };
+    setShowSearch(false); 
+  }; */
 
   // const searchLocation = (event) => {
   //   const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=1&appid=${API_KEY}`;
@@ -160,7 +162,7 @@ const WeatherApp = () => {
     <div className="container">
       {" "}
       {/* Main container for layout */}
-      <button className="searchButton" onClick={handleSearchClick}>
+      {/* <button className="searchButton" onClick={handleSearchClick}>
         {showSearch ? "Hide Search" : "Show Search"}
       </button>
       {showSearch && (
@@ -184,10 +186,9 @@ const WeatherApp = () => {
             </ul>
           )}
         </div>
-      )}
+              )} */}
       <div className="content">
-        <searchLocation onLocationChange={setLocation} />
-        <div className="location">{searchedValue || searchInput}</div>
+        <div className="location">{location}</div>
         <div className="temperature">{`${Math.round(temperature)}°C`}</div>
         <div className="icon">
           <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} />

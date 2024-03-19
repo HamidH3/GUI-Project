@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import TopSection from "../src/components/TopSection";
 import MidSection from "../src/components/MidSection";
 import BottomSection from "../src/components/BottomSection";
+import Search from "../src/components/Search"
 // import Battery from "../components/battery";
 // import Time from "../components/time";
 
 const Home = () => {
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const handleLocationChange = (location) => {
+    console.log(location);
+    setSelectedLocation(location);
+  };
+
   return (
     <div className="Home">
-      <TopSection />
+      <Search onLocationChange = {handleLocationChange}/>
 
-      <MidSection />
+      <TopSection location = {selectedLocation}/>
 
-      <BottomSection />
+      <MidSection location = {selectedLocation}/>
+
+      <BottomSection location = {selectedLocation}/>
     </div>
   );
 };

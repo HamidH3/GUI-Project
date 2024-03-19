@@ -7,7 +7,7 @@ import { getLocationFromLS } from "../functions/location";
 //import API_KEY from "../functions/location";
 
 
-function WeeklyForecast() {
+function WeeklyForecast({location}) {
   const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ function WeeklyForecast() {
     setSelectedDaysData(true);
   }
 
-
+  console.log(location);
 
   const fetchWeatherData = async () => {
     setIsLoading(true);

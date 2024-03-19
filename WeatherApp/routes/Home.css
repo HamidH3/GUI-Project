@@ -4,5 +4,5 @@
   background-size: cover;
   height: 100dvh;
   display: grid;
-  grid-template-rows: 1fr 3fr 3fr;
+  grid-template-rows: 1fr 2fr 4fr;
 }
