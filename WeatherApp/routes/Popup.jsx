@@ -13,7 +13,7 @@
 //     // const location = JSON.parse(locationString); // Parse the string back into an object
 //     // const lat = location.lat;
 //     // const lon = location.lon;
-   
+
 //     const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
 //     fetch(url)
 //       .then((res) => res.json())
@@ -86,7 +86,8 @@ function getWeather(selectedDaysData, selectedIndex) {
   const location = JSON.parse(locationString); // Parse the string back into an object
   const lat = location.lat;
   const lon = location.lon;
-  const [temp, setTemp] = useState(''); 
+  const [temp, setTemp] = useState('');
+  const [rain, setRain] = useState('');
   const [humidity, setHumidity] = useState('');
   const [tempMin, setTempMin] = useState('');
   const [tempMax, setTempMax] = useState('');
@@ -96,12 +97,13 @@ function getWeather(selectedDaysData, selectedIndex) {
   const [icon, setIcon] = useState('');
 
   const url = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-  
+
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
       const weatherData = data.list[selectedIndex];
       setTemp((weatherData.temp.day).toFixed(0))
+      setRain((weatherData.rain))
       setHumidity(weatherData.humidity)
       setTempMin((weatherData.temp.min).toFixed(0))
       setTempMax((weatherData.temp.max).toFixed(0))
@@ -114,16 +116,16 @@ function getWeather(selectedDaysData, selectedIndex) {
 
   var currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + selectedIndex);
-  
+
   const today = new Date();
   const dayToday =
     currentDate.toDateString() === today.toDateString();
-  
-    const dayLabel = dayToday
+
+  const dayLabel = dayToday
     ? "Today"
     : currentDate.toLocaleDateString("en-US", { weekday: "long" });
 
-    return (
+  return (
     <div>
       <h2>{dayLabel}</h2>
       <img
@@ -131,15 +133,25 @@ function getWeather(selectedDaysData, selectedIndex) {
         style={{ width: "100px", height: "100px" }}
       ></img>
       <h4>{weather}</h4>
-      
-      
+
+
       <p>Temperature: <span>{temp}</span>°C</p>
       <p>Humidity: <span>{humidity}</span>%</p>
       <p>Min Temperature: <span>{tempMin}</span>°C</p>
       <p>Max Temperature: <span>{tempMax}</span>°C</p>
       <p>Average Pressure: <span>{pressure}</span> mbar</p>
       <p>Wind: <span>{wind}</span> mph</p>
+
+      <h3>Need help?</h3>
+      {temp > 20 && <p>It is quite warm today.<br></br>Maybe wear something lighter coloured and loose.</p>}
+      {temp < 10 && <p>It is quite chilly today.<br></br>Maybe wear something that will keep you warm.</p>}
+      {temp <= 20 && temp >= 10 && <p>It is a perfect day today.<br></br> Wear what you feel is suitable for your activities</p>}
+
+      {rain > 5 && <p>It might rain quite a bit today.<br></br>Consider carrying an umbrella or raincoat.</p>}
+      {rain > 0 && rain <= 5 && <p>There's a chance of some showers.<br></br>A light jacket might be a good idea.</p>}
+      {rain ==0 && <p>It looks rain free today!</p>}
     </div>
+
   );
 }
 
@@ -150,7 +162,7 @@ function Popup({ onClose, isVisible, selectedDaysData, selectedIndex }) {
         Close
       </button>
       {selectedDaysData && getWeather(selectedDaysData, selectedIndex)}
-      
+
     </div>
   );
 }
