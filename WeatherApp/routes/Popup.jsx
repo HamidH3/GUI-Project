@@ -148,8 +148,8 @@ function getWeather(selectedDaysData, selectedIndex) {
       {temp <= 20 && temp >= 10 && <p>It is a perfect day today.<br></br> Wear what you feel is suitable for your activities</p>}
 
       {rain > 5 && <p>It might rain quite a bit today.<br></br>Consider carrying an umbrella or raincoat.</p>}
-      {rain > 1 && rain <= 5 && <p>There's a chance of some showers.<br></br>A light jacket might be a good idea.</p>}
-      {rain <1 && <p>It looks rain free today!</p>}
+      {rain > 0 && rain <= 5 && <p>There's a chance of some showers.<br></br>A light jacket might be a good idea.</p>}
+      {rain ==0 && <p>It looks rain free today!</p>}
     </div>
 
   );
