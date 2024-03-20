@@ -14,7 +14,6 @@
   align-items: center;
   backdrop-filter: blur(10px);
   z-index: 1000;
-  
 }
 
 .popup h4 {
@@ -31,16 +30,32 @@
 }
 
 
-.popup-enter{
+/* .popup-enter{
   transform: translateY(100%)
-}
+} */
 
-.center {
+/* .center {
   text-align: center;
   
-}
+} */
 
-.testing {
+/* .testing {
  border: "2px solid green";
  padding: "10px" 
+} */
+
+.weatherInfo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.infoBox {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 150px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
 }

@@ -128,30 +128,78 @@ function getWeather(selectedDaysData, selectedIndex) {
   return (
     <div>
       <h2>{dayLabel}</h2>
+
       <img
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
         style={{ width: "100px", height: "100px" }}
       ></img>
       <h4>{weather}</h4>
-
-
-      <p>Temperature: <span>{temp}</span>°C</p>
-      <p>Humidity: <span>{humidity}</span>%</p>
-      <p>Min Temperature: <span>{tempMin}</span>°C</p>
-      <p>Max Temperature: <span>{tempMax}</span>°C</p>
-      <p>Average Pressure: <span>{pressure}</span> mbar</p>
-      <p>Wind: <span>{wind}</span> mph</p>
-
+      <div className="weatherInfo">
+        <div className="infoBox">
+          <p>
+            Temperature: <span>{temp}</span>°C
+          </p>
+        </div>
+        <div className="infoBox">
+          <p>
+            Humidity: <span>{humidity}</span>%
+          </p>
+        </div>
+        <div className="infoBox">
+          <p>
+            Min Temperature: <span>{tempMin}</span>°C
+          </p>
+        </div>
+        <div className="infoBox">
+          <p>
+            Max Temperature: <span>{tempMax}</span>°C
+          </p>
+        </div>
+        <div className="infoBox">
+          <p>
+            Average Pressure: <span>{pressure}</span> mbar
+          </p>
+        </div>
+        <div className="infoBox">
+          <p>
+            Wind: <span>{wind}</span> mph
+          </p>
+        </div>
+      </div>
       <h3>Need help?</h3>
-      {temp > 20 && <p>It is quite warm today.<br></br>Maybe wear something lighter coloured and loose.</p>}
-      {temp < 10 && <p>It is quite chilly today.<br></br>Maybe wear something that will keep you warm.</p>}
-      {temp <= 20 && temp >= 10 && <p>It is a perfect day today.<br></br> Wear what you feel is suitable for your activities</p>}
+      {temp > 20 && (
+        <p>
+          It is quite warm today.<br></br>Maybe wear something lighter coloured
+          and loose.
+        </p>
+      )}
+      {temp < 10 && (
+        <p>
+          It is quite chilly today.<br></br>Maybe wear something that will keep
+          you warm.
+        </p>
+      )}
+      {temp <= 20 && temp >= 10 && (
+        <p>
+          It is a perfect day today.<br></br> Wear what you feel is suitable for
+          your activities
+        </p>
+      )}
 
-      {rain > 5 && <p>It might rain quite a bit today.<br></br>Consider carrying an umbrella or raincoat.</p>}
-      {rain > 0 && rain <= 5 && <p>There's a chance of some showers.<br></br>A light jacket might be a good idea.</p>}
-      {rain ==0 && <p>It looks rain free today!</p>}
+      {rain > 5 && (
+        <p>
+          It might rain quite a bit today.<br></br>Consider carrying an umbrella
+          or raincoat.
+        </p>
+      )}
+      {rain > 0 && rain <= 5 && (
+        <p>
+          There's a chance of some showers.<br></br>A light jacket might be a
+          good idea.
+        </p>
+      )}
+      {rain == 0 && <p>It looks rain free today!</p>}
     </div>
-
   );
 }
 
