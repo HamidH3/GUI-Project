@@ -1,15 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "./specialFeatureParks.css";
-import { getLocationFromLS } from "../functions/location";
+import { getLocationFromLS, setLocationInLS } from "../functions/location";
+import { API_KEY } from "../API";
 
-const SpecialFeatureParks = () => {
-    const locationString = getLocationFromLS();
-    const location = JSON.parse(locationString);
+const SpecialFeatureParks = ( {location} ) => {
+    const [lat, setLat] = useState();
+    const [lon, setLon] = useState();
+
+    //const locationString = getLocationFromLS();
+    //const location = JSON.parse(locationString);
+    if (location == null){
+        location = "Mile End, GB"
+    }
+
     if(!location){
         return
-    }
-    const lat = location.lat;
-    const lon = location.lon;
+    } else {
+        const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
+        fetch(GEO_URL)
+            .then((response) => response.json())
+            .then((data) => {
+            if (data.length > 0) {
+                // Check if data is valid
+                setLat(data[0].lat);
+                setLon(data[0].lon);
+                setLocationInLS(lat, lon);
+          }
+        })
+    };
+
+    //const lat = location.lat;
+    //const lon = location.lon;
 
     const [parks, setParks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
