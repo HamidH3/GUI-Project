@@ -1,0 +1,10 @@
+.parkButton {
+    background: none;
+    border: none;
+    color: #ffffff;
+    background-color: rgba(139, 156, 132, 0.9);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
