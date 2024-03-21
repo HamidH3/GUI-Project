@@ -75,71 +75,71 @@ const Weatherdetails = ({ location }) => {
     setWind(firstDayData.speed);
 
     // Process precipitation data
-    const precipitation = weatherData.list.map((item) => ({
-      time: new Date(item.dt * 1000), 
-      precipitation: item.rain ? item.rain["3h"] : 0,
-    }));
-    setPrecipitationData(precipitation); 
+    // const precipitation = weatherData.list.map((item) => ({
+    //   time: new Date(item.dt * 1000), 
+    //   precipitation: item.rain ? item.rain["3h"] : 0,
+    // }));
+    // setPrecipitationData(precipitation); 
   };
 
   // Render the precipitation chart (when data loads)
-  useEffect(() => {
-    if (!loading && precipitationData.length > 0) {
-      renderChart();
-    }
-  }, [precipitationData, loading]);
+  // useEffect(() => {
+  //   if (!loading && precipitationData.length > 0) {
+  //     renderChart();
+  //   }
+  // }, [precipitationData, loading]);
 
-  // Function to render the chart
-  const renderChart = () => {
-    const ctx = document.getElementById("precipitationChart");
-    if (ctx) {
-      // Handles updates to an existing chart
-      const existingChartInstance = Chart.getChart(ctx);
-      if (existingChartInstance) { 
-        existingChartInstance.destroy(); 
-      }
-      new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: precipitationData.map((item) =>
-            item.time.toLocaleDateString()
-          ),
-          datasets: [
-            {
-              label: "Precipitation Level",
-              data: precipitationData.map((item) => item.precipitation),
-              fill: false,
-              borderColor: "rgba(75, 192, 192, 1)",
-              tension: 0.1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              title: {
-                display: true,
-                text: "Precipitation (mm)",
-                color: "white",
-              },
-              beginAtZero: true,
-              color: "white",
-            },
-            x: {
-              title: {
-                display: true,
-                text: "Date",
-                color: "white",
-              },
-              ticks: {
-                color: "white",
-              },
-            },
-          },
-        },
-      });
-    }
-  };
+  // // Function to render the chart
+  // const renderChart = () => {
+  //   const ctx = document.getElementById("precipitationChart");
+  //   if (ctx) {
+  //     // Handles updates to an existing chart
+  //     const existingChartInstance = Chart.getChart(ctx);
+  //     if (existingChartInstance) { 
+  //       existingChartInstance.destroy(); 
+  //     }
+  //     new Chart(ctx, {
+  //       type: "line",
+  //       data: {
+  //         labels: precipitationData.map((item) =>
+  //           item.time.toLocaleDateString()
+  //         ),
+  //         datasets: [
+  //           {
+  //             label: "Precipitation Level",
+  //             data: precipitationData.map((item) => item.precipitation),
+  //             fill: false,
+  //             borderColor: "rgba(75, 192, 192, 1)",
+  //             tension: 0.1,
+  //           },
+  //         ],
+  //       },
+  //       options: {
+  //         scales: {
+  //           y: {
+  //             title: {
+  //               display: true,
+  //               text: "Precipitation (mm)",
+  //               color: "white",
+  //             },
+  //             beginAtZero: true,
+  //             color: "white",
+  //           },
+  //           x: {
+  //             title: {
+  //               display: true,
+  //               text: "Date",
+  //               color: "white",
+  //             },
+  //             ticks: {
+  //               color: "white",
+  //             },
+  //           },
+  //         },
+  //       },
+  //     });
+  //   }
+  // };
 
   return (
     <div className="details-container">
@@ -179,9 +179,9 @@ const Weatherdetails = ({ location }) => {
               </p>
             </div>
           </div>
-          {!loading && (
+          {/* {!loading && (
             <canvas id="precipitationChart" width="400" height="200"></canvas>
-          )}
+          )} */}
         </>
       )}
     </div>

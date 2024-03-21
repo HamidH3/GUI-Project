@@ -6,7 +6,7 @@ const MidSection = ({location}) => {
   console.log(location);
   return (
     <div className="midSec">
-      <p>Hourly Forecast</p>
+      <h2>Hourly Forecast</h2>
       <HourlyForecast location = {location}/>
     </div>
   );
