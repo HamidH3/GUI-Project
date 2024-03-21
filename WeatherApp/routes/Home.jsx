@@ -4,8 +4,7 @@ import TopSection from "../src/components/TopSection";
 import MidSection from "../src/components/MidSection";
 import BottomSection from "../src/components/BottomSection";
 import Search from "../src/components/Search"
-// import Battery from "../components/battery";
-// import Time from "../components/time";
+
 
 const Home = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -17,6 +16,7 @@ const Home = () => {
 
   return (
     <div className="Home">
+     
       <Search onLocationChange = {handleLocationChange}/>
 
       <TopSection location = {selectedLocation}/>

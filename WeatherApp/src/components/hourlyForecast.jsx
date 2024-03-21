@@ -28,14 +28,15 @@ const HourlyForecast = ({ location }) => {
           const filteredData = weatherData.list.filter(
             (item) => new Date(item.dt_txt) <= next24Hours
           );
-
+          //sets the time with the corresponding time zone
           setHourlyForecast(filteredData);
           setTimezone(weatherData.city.timezone);
         } catch (error) {
           console.log("Error fetching Mile End weather:", error);
         }
       } else {
-        // Fetch weather based on user-provided location
+        // Fetch weather based on user-provided location.
+        //This else statement happens when a location is entered and location is not null.
         const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
         try {
@@ -78,7 +79,7 @@ const HourlyForecast = ({ location }) => {
     const options = { hour: "numeric", minute: "numeric", hour12: true };
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
-
+//return statement displays information onto screen
   return (
     <div className="hourly">
       {hourlyForecast.length > 0 ? (

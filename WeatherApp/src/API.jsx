@@ -1,6 +1,7 @@
 
-
-// export const GEO_URL = "http://api.openweathermap.org/geo/1.0"
+////////////////////////////////////////////////
+//This section has relevant API URLs and API key to be called on
+////////////////////////////////////////////////
 
 export const CURRENT_WEATHER_URL = "https://api.openweathermap.org/data/2.5"
 

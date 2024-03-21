@@ -1,7 +1,7 @@
 import "./Search.css";
 import React, { useState, useEffect, useRef } from "react";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
-import { getLocationFromLS, setLocationInLS } from "../functions/location";
+
 
 const Search = ({ onLocationChange }) => {
   // States to manage the search component
@@ -76,7 +76,6 @@ const Search = ({ onLocationChange }) => {
   };
     return (
         <div className="container">
-          {" "}
           {/* Main container for layout */}
           <button className="searchButton" onClick={handleSearchClick}>
             {showSearch ? "Hide Search" : "Show Search"}
@@ -103,9 +102,6 @@ const Search = ({ onLocationChange }) => {
               )}
             </div>
             )}
-          {/* <div className="content">
-            <searchLocation onLocationChange = {setLocation} />
-          </div> */}
         </div>
       );
 };

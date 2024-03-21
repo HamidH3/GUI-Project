@@ -99,6 +99,8 @@ const SpecialFeatureParks = ({ location }) => {
       throw error; // Rethrow to be handled in 'findParks'
     }
   };
+  /*return statement displays the relevant info to the screen.
+   This is displayed when button is clicked*/
     return (
         <div className="button-container">
             <button className="parkButton" onClick={findParks}>Find Nearby Parks</button>
