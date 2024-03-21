@@ -27,7 +27,6 @@ const SpecialFeatureParks = ({ location }) => {
           // Assuming valid data format, extract latitude and longitude
           setLat(data[0].lat);
           setLon(data[0].lon);
-          setLocationInLS(lat, lon);  // Store in local storage for future use
         }
       });
   }, [location]); // Re-run the effect when the 'location' prop changes

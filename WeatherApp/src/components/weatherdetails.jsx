@@ -19,9 +19,10 @@ const Weatherdetails = ({ location }) => {
   useEffect(() => {
     const fetchWeatherDetails = async () => {
       if (!location) {
+        console.log(location)
         // Fetch details for default location (Mile End)
-        const mileEndLat = 51.5215; 
-        const mileEndLon = -0.0397;
+        const mileEndLat = 51.5250913; 
+        const mileEndLon = -0.0350468;
         const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
 
         try {
@@ -46,7 +47,6 @@ const Weatherdetails = ({ location }) => {
             const lat = geoData[0].lat;
             const lon = geoData[0].lon;
             const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-            setLocationInLS(lat, lon);
 
             const weatherResponse = await fetch(weatherURL);
             const weatherData = await weatherResponse.json();

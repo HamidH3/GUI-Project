@@ -103,9 +103,9 @@ const Search = ({ onLocationChange }) => {
               )}
             </div>
             )}
-          <div className="content">
+          {/* <div className="content">
             <searchLocation onLocationChange = {setLocation} />
-          </div>
+          </div> */}
         </div>
       );
 };

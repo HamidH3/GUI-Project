@@ -11,7 +11,7 @@ const Home = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationChange = (location) => {
-    console.log(location);
+    console.log("loc",location);
     setSelectedLocation(location);
   };
 
