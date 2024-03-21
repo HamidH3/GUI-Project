@@ -6,8 +6,7 @@ const MidSection = ({location}) => {
   console.log(location);
   return (
     <div className="midSec">
-       {/* Recieves location as a prop and passes it into other components*/}
-      <p>Hourly Forecast</p>
+      <h2>Hourly Forecast</h2>
       <HourlyForecast location = {location}/>
     </div>
   );

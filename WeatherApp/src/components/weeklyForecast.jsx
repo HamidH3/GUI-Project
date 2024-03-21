@@ -22,6 +22,7 @@ function WeeklyForecast({ location }) {
     setButtonPopup(true); // Show popup
     setSelectedDaysData(true);
   }
+  
 
   // Function to fetch weather data for the forecast
   const fetchWeatherData = async () => {

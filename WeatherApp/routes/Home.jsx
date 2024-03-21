@@ -12,6 +12,7 @@ const Home = () => {
 
   // gets location from search component to be passed as a prop into other components
   const handleLocationChange = (location) => {
+    console.log("loc",location);
     setSelectedLocation(location);
   };
 

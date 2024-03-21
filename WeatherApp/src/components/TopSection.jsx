@@ -19,8 +19,8 @@ const WeatherApp = ({ location }) => {
     const fetchWeather = async () => {
       if (!location) {
         // Fetch weather for Mile End (default)
-        const mileEndLat = 51.5215;
-        const mileEndLon = -0.0397;
+        const mileEndLat = 51.5250913;
+        const mileEndLon = -0.0350468;
         const weatherURL = `${CURRENT_WEATHER_URL}/weather?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
 
         try {
@@ -31,7 +31,8 @@ const WeatherApp = ({ location }) => {
           setWeatherDesc(weatherData.weather[0].description);
           setIcon(weatherData.weather[0].icon);
 
-        } catch (error) { 
+        } 
+        catch (error) { 
           console.log("Error fetching Mile End weather:", error);
           setTemperature(null);  // Display error state
         }
@@ -52,7 +53,7 @@ const WeatherApp = ({ location }) => {
 
             const weatherResponse = await fetch(weatherURL);
             const weatherData = await weatherResponse.json();
-
+         
             setTemperature(weatherData.main.temp);
             setWeatherDesc(weatherData.weather[0].description);
             setIcon(weatherData.weather[0].icon);
