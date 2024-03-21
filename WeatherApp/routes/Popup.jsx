@@ -137,32 +137,32 @@ function getWeather(selectedDaysData, selectedIndex) {
       <div className="weatherInfo">
         <div className="infoBox">
           <p>
-            Temperature: <span>{temp}</span>°C
+            Temperature: <br></br><span>{temp}</span>°C
           </p>
         </div>
         <div className="infoBox">
           <p>
-            Humidity: <span>{humidity}</span>%
+            Humidity: <br></br><span>{humidity}</span>%
           </p>
         </div>
         <div className="infoBox">
           <p>
-            Min Temperature: <span>{tempMin}</span>°C
+            Min Temperature: <br></br><span>{tempMin}</span>°C
           </p>
         </div>
         <div className="infoBox">
           <p>
-            Max Temperature: <span>{tempMax}</span>°C
+            Max Temperature: <br></br><span>{tempMax}</span>°C
           </p>
         </div>
         <div className="infoBox">
           <p>
-            Average Pressure: <span>{pressure}</span> mbar
+            Average Pressure: <br></br><span>{pressure}</span> mbar
           </p>
         </div>
         <div className="infoBox">
           <p>
-            Wind: <span>{wind}</span> mph
+            Wind: <br></br><span>{wind}</span> mph
           </p>
         </div>
       </div>

@@ -67,6 +67,7 @@ const WeatherApp = ({location}) => {
   }, [searchInput]); */
 
   useEffect(() => {
+    // Set location to Mile End as default
     if (!location) {
       const mileEndLat = 51.5215; // Mile End's latitude
       const mileEndLon = -0.0397; // Mile End's longitude

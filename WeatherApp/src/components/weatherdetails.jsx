@@ -138,32 +138,32 @@ const Weatherdetails = ({ location }) => {
           <div className="tempBox">
            
             <p>
-              Min Temperature: <span>{tempMin}</span>°C
+              Min Temperature: <br></br><span>{tempMin}</span>°C
             </p>
             <p>
-              Max Temperature: <span>{tempMax}</span>°C
+              Max Temperature: <br></br><span>{tempMax}</span>°C
             </p>
           </div>
           <div className="otherDetails">
             <div className="detailBox">
               <p>
-                Temperature: <span>{temp}</span>°C
+                Temperature: <br></br><span>{temp}</span>°C
               </p>
             </div>
             <div className="detailBox">
               <p>
-                Humidity: <span>{humidity}</span>%
+                Humidity: <br></br><span>{humidity}</span>%
               </p>
             </div>
 
             <div className="detailBox">
               <p>
-                Average Pressure: <span>{pressure}</span> mbar
+                Average Pressure: <br></br><span>{pressure}</span> mbar
               </p>
             </div>
             <div className="detailBox">
               <p>
-                Wind: <span>{wind}</span> mph
+                Wind: <br></br><span>{wind}</span> mph
               </p>
             </div>
           </div>
