@@ -5,21 +5,25 @@ import { getLocationFromLS } from "../functions/location";
 import {API_KEY} from "../API";
 
 function WeeklyForecast({ location }) {
+  // States for managing forecast data and loading status
   const [forecastData, setForecastData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [buttonPopup, setButtonPopup] = useState(false); //initially, button pop is set to false and not visible, when pop up button is triggered, it changes state to true and when 'close' is clicked, it triggers the 'onClose', therefore closing the popup.
+  // States for managing the popup display
+  const [buttonPopup, setButtonPopup] = useState(false);
   const [selectedDaysData, setSelectedDaysData] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  // State for storing geocoding data
   const [geoInfo, setGeoInfo] = useState();
 
+  // Function triggered when a day is clicked
   function buttonClickHandle(index) {
-    // set your selectedIndex
-    setSelectedIndex(index);
-    setButtonPopup(true);
+    setSelectedIndex(index); // Set your selectedIndex
+    setButtonPopup(true); // Show popup
     setSelectedDaysData(true);
   }
 
+  // Function to fetch weather data for the forecast
   const fetchWeatherData = async () => {
     setIsLoading(true);
     setError(null);
@@ -28,7 +32,7 @@ function WeeklyForecast({ location }) {
       // Use GEO API call to get the lat and lon
       // Use lat and lon to get data from openweather using an API call
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
-
+      // Fetch geocoding data first (to get latitude and longitude)
       fetch(GEO_URL)
         .then((res) => res.json())
         .then((data) => {
@@ -39,7 +43,7 @@ function WeeklyForecast({ location }) {
           const lon = data.lon;
           const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
-          return fetch(apiUrl);
+          return fetch(apiUrl); // Fetch weather data using lat/lon
         })
         .then((response) => {
           if (!response.ok) {
@@ -61,6 +65,7 @@ function WeeklyForecast({ location }) {
       setIsLoading(false);
     }
   };
+  // Fetch weather data on mount and when 'location' changes
   useEffect(() => {
     fetchWeatherData();
   }, [getLocationFromLS, location]);
@@ -73,6 +78,7 @@ function WeeklyForecast({ location }) {
     return <p>Error: {error}</p>;
   }
 
+  // Generate the daily forecast components
   let id = -1;
   const days = [];
   for (let index = 0; index < 7; index++) {
@@ -81,6 +87,7 @@ function WeeklyForecast({ location }) {
     currentDate.setDate(currentDate.getDate() + index);
     const today = new Date();
     const dayToday = currentDate.toDateString() === today.toDateString();
+    // Determine the day label ("Today" or the weekday)
     const dayLabel = dayToday
       ? "Today"
       : currentDate.toLocaleDateString("en-US", { weekday: "long" });

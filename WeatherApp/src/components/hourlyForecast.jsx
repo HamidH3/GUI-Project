@@ -3,69 +3,73 @@ import "./hourlyForecast.css";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
 
-
-const HourlyForecast = ({location}) => {
+const HourlyForecast = ({ location }) => {
   const [hourlyForecast, setHourlyForecast] = useState([]);
-  const [timezone, setTimezone] = useState('');
+  const [timezone, setTimezone] = useState(''); 
 
   useEffect(() => {
+    const fetchHourlyForecast = async () => {
       if (!location) {
-        const mileEndLat = 51.5215; // Mile End's latitude
-        const mileEndLon = -0.0397; // Mile End's longitude
+        // Fetch weather for default location (Mile End)
+        const mileEndLat = 51.5215; 
+        const mileEndLon = -0.0397; 
         const weatherURL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
-  
-        fetch(weatherURL)
-          .then((response) => response.json())
-          .then((weatherData) => {
-            const currentTime = new Date();
-            const next24Hours = new Date(
-            currentTime.getTime() + 24 * 60 * 60 * 1000
-          );
-          const filteredData = weatherData.list.filter(
-            (item) => new Date(item.dt_txt) <= next24Hours
-          );
-          setHourlyForecast(filteredData);
-          setTimezone(data.city.timezone);
-          })
-          .catch(() => {
-            console.log("second catch");
-          });
-      } else {
-        // Use GEO API call to get the lat and lon
-        // Use lat and lon to get data from openweather using another API call
-        const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
-  
-        fetch(GEO_URL)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.length > 0) {
-              // Check if data is valid
-              const lat = data[0].lat;
-              const lon = data[0].lon;
-              const weatherURL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
-              setLocationInLS(lat, lon);
-              return fetch(weatherURL);
-            }
-          })
-          .then((response) => response.json())
-          .then((weatherData) => {
-            console.log(weatherData);
-            const currentTime = new Date();
-            const next24Hours = new Date(
-            currentTime.getTime() + 24 * 60 * 60 * 1000
-          );
-          const filteredData = weatherData.list.filter(
-            (item) => new Date(item.dt_txt) <= next24Hours
-          );
-          setHourlyForecast(filteredData);
-          setTimezone(weatherData.city.timezone);
-          })
-      }
-      console.log(location);
-    }, [location]);
 
+        try {
+          const response = await fetch(weatherURL);
+          const weatherData = await response.json();
+
+          // Filter for the next 24 hours 
+          const currentTime = new Date();
+          const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000); 
+
+          const filteredData = weatherData.list.filter(item => new Date(item.dt_txt) <= next24Hours);              
+
+          setHourlyForecast(filteredData); 
+          setTimezone(weatherData.city.timezone); 
+
+        } catch (error) {
+          console.log("Error fetching Mile End weather:", error); 
+        } 
+
+      } else {
+        // Fetch weather based on user-provided location
+        const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
+        try {
+          const geoResponse = await fetch(GEO_URL);
+          const geoData = await geoResponse.json();
+
+          if (geoData.length > 0) {
+            const lat = geoData[0].lat;
+            const lon = geoData[0].lon;
+            const weatherURL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+            setLocationInLS(lat, lon);
+
+            const weatherResponse = await fetch(weatherURL);
+            const weatherData = await weatherResponse.json();
+
+            // Filter for next 24 hours
+            const currentTime = new Date();
+            const next24Hours = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000); 
+
+            const filteredData = weatherData.list.filter(item => new Date(item.dt_txt) <= next24Hours);              
+
+            setHourlyForecast(filteredData); 
+            setTimezone(weatherData.city.timezone); 
+          }
+        } catch (error) {
+          console.error("Error fetching weather data:", error);
+        }  
+      }
+    };
+
+    fetchHourlyForecast(); 
+  }, [location]); 
+
+  // Function for formatting the time
   const formatTime = (timeString) => {
-    const date = new Date(timeString);
+    const date = new Date(timeString); 
     const options = { hour: "numeric", minute: "numeric", hour12: true };
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };

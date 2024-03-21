@@ -4,22 +4,21 @@ import WeatherDetails from "./weatherdetails";
 import WeeklyForecast from "./weeklyForecast";
 import SpecialFeatureParks from "./specialFeatureParks";
 
-const BottomSection = ({location}) => {
-  console.log(location);
-  
+const BottomSection = ({ location }) => {
+  console.log(location); // Logs the current location to the console (likely for debugging)
+
   return (
     <div className="bottomSec">
-      {/* <p>bottom</p> */}
-      {/* Should include vertical scroller with extra info */}
+      {/* Main container for all bottom section content */}
       {/* Recieves location as a prop and passes it into other components*/}
       
 
       <div className="bottomComponent">
-        <WeeklyForecast location = {location}/>
+        <WeeklyForecast location={location} /> 
         <p></p>
-        <WeatherDetails location = {location}/>
+        <WeatherDetails location={location} /> 
         <p></p>
-        <SpecialFeatureParks location = {location}/>
+        <SpecialFeatureParks location={location} /> 
       </div>
     </div>
   );

@@ -3,102 +3,103 @@ import "./specialFeatureParks.css";
 import { getLocationFromLS, setLocationInLS } from "../functions/location";
 import { API_KEY } from "../API";
 
-const SpecialFeatureParks = ( {location} ) => {
-    const [lat, setLat] = useState();
-    const [lon, setLon] = useState();
+const SpecialFeatureParks = ({ location }) => {
+  const [lat, setLat] = useState();
+  const [lon, setLon] = useState();
 
-    //const locationString = getLocationFromLS();
-    //const location = JSON.parse(locationString);
-    if (location == null){
-        location = "Mile End, GB"
+  // useEffect for initial location setup
+  useEffect(() => {
+    // Ensure location is valid before proceeding
+    if (location == null) {
+      location = "Mile End, GB"; // Provide a default location
     }
 
-    if(!location){
-        return
-    } else {
-        // Use GEO API call to get the lat and lon
-        const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+    if (!location) {
+      return; // Exit function early if location is still not valid
+    }
+    // Use GEO API call to get the lat and lon
+    const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
-        fetch(GEO_URL)
-            .then((response) => response.json())
-            .then((data) => {
-            if (data.length > 0) {
-                // Check if data is valid
-                setLat(data[0].lat);
-                setLon(data[0].lon);
-                setLocationInLS(lat, lon);
-          }
-        })
-    };
-
-    const [parks, setParks] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-
-    console.log("long/lat:", lon, lat)
-
-
-    const findParks = async () => {
-        if (!lat || !lon) {
-            setError('Location data is not available');
-            return;
+    fetch(GEO_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.length > 0) {
+          // Assuming valid data format, extract latitude and longitude
+          setLat(data[0].lat);
+          setLon(data[0].lon);
+          setLocationInLS(lat, lon);  // Store in local storage for future use
         }
-        setParks([]); 
-        setIsLoading(true);
-        setError(null);
+      });
+  }, [location]); // Re-run the effect when the 'location' prop changes
 
-        try {
-            const parks = await findParksNearCoordinates(lat, lon);
-            setParks(parks);
-            setIsLoading(false);
+  // States to manage park data and loading state
+  const [parks, setParks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-        } catch (error) {
-            console.error('Error fetching park data:', error);
-            setError('An error occurred while fetching park data');
-            setIsLoading(false);
-        }
-    };
+  // Function to fetch and filter parks 
+  const findParks = async () => {
+    if (!lat || !lon) {
+      setError("Location data is not available"); 
+      return; // Halt search if coordinates are missing
+    }
 
-    // Use lat and lon to get data using an API call
-    const findParksNearCoordinates = async (latitude, longitude) => {
-        const boundingBoxSize = 500;
-        const overpassQuery = `[out:json][timeout:25];
-          (
-            way["leisure"="park"](around:${boundingBoxSize}, ${latitude}, ${longitude});
-          );
-          out body;
-          >;
-          out skel qt;`;
+    setParks([]); // Reset parks state on new search
+    setIsLoading(true); 
+    setError(null); 
 
-        const overpassEndpoint = "https://overpass-api.de/api/interpreter";
-        const encodedQuery = encodeURIComponent(overpassQuery);
+    try {
+      const parks = await findParksNearCoordinates(lat, lon);
+      setParks(parks);
+      setIsLoading(false); 
+    } catch (error) {
+      console.error("Error fetching park data:", error);
+      setError("An error occurred while fetching park data");
+      setIsLoading(false); 
+    }
+  };
 
-        try {
-            const response = await fetch(`${overpassEndpoint}?data=${encodedQuery}`);
-            if (!response.ok) {
-                throw new Error(`Overpass API request failed: ${response.status}`);
-            }
+  // Function to query Overpass API for parks based on coordinates
+  const findParksNearCoordinates = async (latitude, longitude) => {
+    const boundingBoxSize = 500; // Search radius in meters
 
-            const data = await response.json();
-            console.log("data returned:", data.elements)
+    // Overpass QL query
+    const overpassQuery = `[out:json][timeout:25];
+      (
+        way["leisure"="park"](around:${boundingBoxSize}, ${latitude}, ${longitude});
+      );
+      out body;
+      >;
+      out skel qt;`;
 
-            // Filter and map the relevant data
-            return data.elements.filter(element => {
-                return element.type === 'way' && element.tags && element.tags.name;
-            }).map(element => {
-                return {
-                    name: element.tags.name,
-                    lat: element.lat,
-                    lon: element.lon,
-                    type: element.type
-                };
-            });
+    const overpassEndpoint = "https://overpass-api.de/api/interpreter";
+    const encodedQuery = encodeURIComponent(overpassQuery);
 
-        } catch (error) {
-            console.error("Error fetching park data:", error);
-            throw error; // Rethrow to be caught in 'findParks'
-        }
-    };
+    try {
+      const response = await fetch(`${overpassEndpoint}?data=${encodedQuery}`);
+      if (!response.ok) {
+        throw new Error(`Overpass API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("data returned:", data.elements);
+
+      // Filter and map Overpass results
+      return data.elements.filter((element) => {
+        return element.type === "way" && element.tags && element.tags.name; 
+      }).map((element) => {
+        return {
+          name: element.tags.name,
+          lat: element.lat, 
+          lon: element.lon, 
+          type: element.type, 
+        };
+      });
+    } catch (error) {
+      console.error("Error fetching park data:", error);
+      throw error; // Rethrow to be handled in 'findParks'
+    }
+  };
     return (
         <div className="button-container">
             <button className="parkButton" onClick={findParks}>Find Nearby Parks</button>
