@@ -23,13 +23,16 @@ width: 350px;
 }
 .detailBox {
   background-color: rgba(139, 156, 132, 0.384);
-  padding: 10px;
+  padding: 23px;
   border-radius: 10px;
+  padding-bottom: 2px;
+    padding-top: 2px;
 }
 .otherDetails {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap:10px;
   justify-content: space-between; 
   margin-bottom: 10px;
+  
 }
