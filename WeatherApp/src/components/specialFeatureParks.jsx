@@ -102,7 +102,7 @@ const SpecialFeatureParks = ( {location} ) => {
         }
     };
     return (
-        <div className="details-container">
+        <div className="button-container">
             <button className="parkButton" onClick={findParks}>Find Nearby Parks</button>
             {error && <p className="error">{error}</p>}
             {isLoading && <p>Loading park data...</p>}

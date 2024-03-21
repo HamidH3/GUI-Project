@@ -1,8 +1,11 @@
 .weekly-container {
-  padding: 10px;
+  /* padding: 10px; */
+    padding-top: 10px;
+      padding-bottom: 10px;
   border-radius: 20px;
   /* width:80%; */
   width: 350px;
+
   margin: auto;
   background-color: rgba(139, 156, 132, 0.384);
 }
@@ -10,6 +13,7 @@
 .weekly-container ul {
   list-style-type: none;
   padding: 0;
+  
 }
 
 .weekly-container button {
@@ -41,7 +45,7 @@
 .center {
   color: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border-top: 1px solid #ccc;
   border-color: #cccccc76;
