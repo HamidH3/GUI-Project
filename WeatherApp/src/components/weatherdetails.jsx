@@ -117,9 +117,6 @@ const Weatherdetails = ({ location }) => {
               </p>
             </div>
           </div>
-          {/* {!loading && (
-            <canvas id="precipitationChart" width="400" height="200"></canvas>
-          )} */}
         </>
       )}
     </div>

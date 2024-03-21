@@ -100,13 +100,12 @@ function WeeklyForecast({ location }) {
           <button onClick={() => buttonClickHandle(index)} key={id}>
             <div className="center">
               <b>{dayLabel}</b>
-              <p className="img">
+    
                 <img
+                  className="weatherIcon"
                   src={`https://openweathermap.org/img/wn/${forecastData.list[id].weather[0].icon}@2x.png`}
-                  style={{ width: "40px", height: "40px" }}
-                  alt=""
                 />
-              </p>
+            
               <ul>{forecastData.list[id].temp.day.toFixed(0)}°C</ul>
               <ul>{forecastData.list[id].humidity}%</ul>
             </div>

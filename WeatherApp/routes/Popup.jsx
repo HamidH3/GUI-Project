@@ -64,9 +64,9 @@ function getWeather(selectedDaysData, selectedIndex) {
     <div>
       <h2>{dayLabel}</h2>
 
-      <img
+      <img className= "weatherIcon"
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-        style={{ width: "100px", height: "100px" }}
+      
       ></img>
       <h4>{weather}</h4>
       <div className="weatherInfo">

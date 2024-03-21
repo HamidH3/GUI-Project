@@ -87,12 +87,13 @@ const HourlyForecast = ({ location }) => {
           <div className="time-block" key={index}>
             <p>{formatTime((weatherData.dt + timezone) * 1000)}</p>
             <p>{Math.round(weatherData.main.temp)}°C</p>
-            <p className="img">
+           
               <img
+                className="weatherIcon"
                 src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-                style={{ width: "50px", height: "50px" }}
-              ></img>
-            </p>
+                // style={{ width: "50px", height: "50px" }}
+              />
+          
           </div>
         ))
       ) : (
