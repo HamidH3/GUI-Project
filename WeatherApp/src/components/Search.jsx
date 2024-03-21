@@ -75,7 +75,6 @@ const Search = ({ onLocationChange }) => {
   };
     return (
         <div className="container">
-          {" "}
           {/* Main container for layout */}
           <button className="searchButton" onClick={handleSearchClick}>
             {showSearch ? "Hide Search" : "Show Search"}
@@ -102,9 +101,6 @@ const Search = ({ onLocationChange }) => {
               )}
             </div>
             )}
-          {/* <div className="content">
-            <searchLocation onLocationChange = {setLocation} />
-          </div> */}
         </div>
       );
 };

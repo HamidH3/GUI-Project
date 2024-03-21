@@ -29,7 +29,6 @@
   border-radius: 5%;
 }
 
-
 /* .popup-enter{
   transform: translateY(100%)
 } */
@@ -59,4 +58,9 @@
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+}
+
+.weatherIcon {
+  width: 100px;
+  height: 100px;
 }

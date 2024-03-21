@@ -42,6 +42,8 @@ function WeeklyForecast({ location }) {
 
           const lat = data.lat;
           const lon = data.lon;
+          //once we retreive the lat and lon of a searched/default location, we can assign it to our weather api to get relevant
+          // weather information about that location
           const apiUrl = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
 
           return fetch(apiUrl); // Fetch weather data using lat/lon
@@ -79,7 +81,7 @@ function WeeklyForecast({ location }) {
     return <p>Error: {error}</p>;
   }
 
-  // Generate the daily forecast components
+  // Generate the daily forecast components using a for loop for the next 7 days (weekly forecast)
   let id = -1;
   const days = [];
   for (let index = 0; index < 7; index++) {
@@ -99,13 +101,12 @@ function WeeklyForecast({ location }) {
           <button onClick={() => buttonClickHandle(index)} key={id}>
             <div className="center">
               <b>{dayLabel}</b>
-              <p className="img">
+    
                 <img
+                  className="weatherIcon"
                   src={`https://openweathermap.org/img/wn/${forecastData.list[id].weather[0].icon}@2x.png`}
-                  style={{ width: "40px", height: "40px" }}
-                  alt=""
                 />
-              </p>
+            
               <ul>{forecastData.list[id].temp.day.toFixed(0)}°C</ul>
               <ul>{forecastData.list[id].humidity}%</ul>
             </div>
@@ -119,6 +120,8 @@ function WeeklyForecast({ location }) {
     <div className="weekly-container">
       <h2>7-Day Forecast</h2>
       {buttonPopup && (
+        //here when we call popup, we set its visibility to true as it appears
+        //when we click on the button, which in this case is any given day from the weekly forecast
         <Popup
           onClose={() => setButtonPopup(false)}
           isVisible={true}
