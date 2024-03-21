@@ -1,8 +1,18 @@
-# React + Vite
+Requirements:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Node.js
+Visual Studio Code
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Running the app:
+
+Open the GUI-Project folder in VS Code
+Run the following commands in the VS terminal:
+
+cd .\WeatherApp\
+npm i
+npm run dev
+
+This will output a link which should be:
+http://localhost:5173/ (if port 5173 is in use it may use a different port)
+ctrl + click the link to open it
