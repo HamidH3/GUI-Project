@@ -1,10 +1,10 @@
-Requirements:
+#Requirements:
 
 Node.js
 Visual Studio Code
 
 
-Running the app:
+#Running the app:
 
 Open the GUI-Project folder in VS Code
 Run the following commands in the VS terminal:
