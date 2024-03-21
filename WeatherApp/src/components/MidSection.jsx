@@ -13,3 +13,4 @@ const MidSection = ({location}) => {
 };
 
 export default MidSection;
+
