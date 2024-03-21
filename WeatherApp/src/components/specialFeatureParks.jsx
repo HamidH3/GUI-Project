@@ -16,6 +16,7 @@ const SpecialFeatureParks = ( {location} ) => {
     if(!location){
         return
     } else {
+        // Use GEO API call to get the lat and lon
         const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
         fetch(GEO_URL)
@@ -30,15 +31,11 @@ const SpecialFeatureParks = ( {location} ) => {
         })
     };
 
-    //const lat = location.lat;
-    //const lon = location.lon;
-
     const [parks, setParks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     console.log("long/lat:", lon, lat)
-
 
 
     const findParks = async () => {
@@ -62,6 +59,7 @@ const SpecialFeatureParks = ( {location} ) => {
         }
     };
 
+    // Use lat and lon to get data using an API call
     const findParksNearCoordinates = async (latitude, longitude) => {
         const boundingBoxSize = 500;
         const overpassQuery = `[out:json][timeout:25];

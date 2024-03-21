@@ -49,6 +49,7 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
 }
+
 .infoBox {
   border: 1px solid #ccc;
   padding: 10px;

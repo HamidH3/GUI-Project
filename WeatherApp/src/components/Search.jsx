@@ -1,7 +1,6 @@
 import "./Search.css";
 import React, { useState, useEffect, useRef } from "react";
 import { CURRENT_WEATHER_URL, API_KEY } from "../API";
-import { getLocationFromLS, setLocationInLS } from "../functions/location";
 
 const Search = ( {onLocationChange} ) => {
     const [location, setLocation] = useState();

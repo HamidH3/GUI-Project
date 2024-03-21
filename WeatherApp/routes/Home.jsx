@@ -10,8 +10,8 @@ import Search from "../src/components/Search"
 const Home = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  // gets location from search component to be passed as a prop into other components
   const handleLocationChange = (location) => {
-    console.log(location);
     setSelectedLocation(location);
   };
 

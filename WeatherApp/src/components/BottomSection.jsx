@@ -11,6 +11,7 @@ const BottomSection = ({location}) => {
     <div className="bottomSec">
       {/* <p>bottom</p> */}
       {/* Should include vertical scroller with extra info */}
+      {/* Recieves location as a prop and passes it into other components*/}
       
 
       <div className="bottomComponent">

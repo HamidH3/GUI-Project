@@ -31,6 +31,8 @@ const Weatherdetails = ({ location }) => {
           setLoading(false);
         });
     } else {
+      // Use GEO API call to get the lat and lon
+      // Use lat and lon to get data from openweather using an API call
       const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
 
       fetch(GEO_URL)

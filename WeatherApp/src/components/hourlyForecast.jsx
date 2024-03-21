@@ -9,14 +9,6 @@ const HourlyForecast = ({location}) => {
   const [timezone, setTimezone] = useState('');
 
   useEffect(() => {
-      /* const locationString = getLocationFromLS();
-      const location = JSON.parse(locationString); // Parse the string back into an object
-      const lat = location.lat;
-      const lon = location.lon; */
-      
-      const key = "28e0bac8d6e2712922db61d4a21b1902";
-      //const URL = `https://pro.openweathermap.org/data/2.5/forecast/hourly?q=${city}&appid=${key}&units=metric`;
-      
       if (!location) {
         const mileEndLat = 51.5215; // Mile End's latitude
         const mileEndLon = -0.0397; // Mile End's longitude
@@ -39,6 +31,8 @@ const HourlyForecast = ({location}) => {
             console.log("second catch");
           });
       } else {
+        // Use GEO API call to get the lat and lon
+        // Use lat and lon to get data from openweather using another API call
         const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
   
         fetch(GEO_URL)
@@ -69,31 +63,6 @@ const HourlyForecast = ({location}) => {
       }
       console.log(location);
     }, [location]);
-      
-      /*try {
-        const response = await fetch(URL);
-        if (!response.ok) {
-          throw new Error("Failed to fetch hourly forecast data");
-        }
-        const data = await response.json();
-        
-        const currentTime = new Date();
-        const next24Hours = new Date(
-          currentTime.getTime() + 24 * 60 * 60 * 1000
-        );
-        const filteredData = data.list.filter(
-          (item) => new Date(item.dt_txt) <= next24Hours
-        );
-        setHourlyForecast(filteredData);
-        setTimezone(data.city.timezone);
-      } catch (error) {
-        console.error("Error fetching hourly forecast data:", error);
-      }
-    };
-
-    getHourly();
-  }, [getLocationFromLS]); */
-  // window.location.reload();
 
   const formatTime = (timeString) => {
     const date = new Date(timeString);
