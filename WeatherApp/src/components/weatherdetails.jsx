@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./weatherdetails.css";
 import { setLocationInLS } from "../functions/location";
 import { API_KEY } from "../API";
-import Chart from "chart.js/auto";
+import Chart from "chart.js/auto"; 
 
 const Weatherdetails = ({ location }) => {
+  // State variables for weather details
   const [temp, setTemp] = useState("");
   const [humidity, setHumidity] = useState("");
   const [tempMin, setTempMin] = useState("");
@@ -12,50 +13,58 @@ const Weatherdetails = ({ location }) => {
   const [pressure, setPressure] = useState("");
   const [wind, setWind] = useState("");
   const [precipitationData, setPrecipitationData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
 
+  // Fetch weather details on initial mount and when 'location' changes 
   useEffect(() => {
-    if (!location) {
-      const mileEndLat = 51.5215; // Mile End's latitude
-      const mileEndLon = -0.0397; // Mile End's longitude
-      const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
+    const fetchWeatherDetails = async () => {
+      if (!location) {
+        // Fetch details for default location (Mile End)
+        const mileEndLat = 51.5215; 
+        const mileEndLon = -0.0397;
+        const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${mileEndLat}&lon=${mileEndLon}&appid=${API_KEY}&units=metric`;
 
-      fetch(weatherURL)
-        .then((response) => response.json())
-        .then((weatherData) => {
-          setWeatherDetails(weatherData);
-          setLoading(false);
-        })
-        .catch(() => {
+        try {
+          const response = await fetch(weatherURL);
+          const weatherData = await response.json();
+          setWeatherDetails(weatherData); 
+          setLoading(false); 
+        } catch (error) {
           console.log("Error fetching weather data");
-          setLoading(false);
-        });
-    } else {
-      const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+          setLoading(false); 
+        }
 
-      fetch(GEO_URL)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.length > 0) {
-            const lat = data[0].lat;
-            const lon = data[0].lon;
+      } else {
+        // Fetch details based on user-provided location
+        const GEO_URL = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${API_KEY}`;
+
+        try {
+          const geoResponse = await fetch(GEO_URL);
+          const geoData = await geoResponse.json();
+
+          if (geoData.length > 0) {
+            const lat = geoData[0].lat;
+            const lon = geoData[0].lon;
             const weatherURL = `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
             setLocationInLS(lat, lon);
-            return fetch(weatherURL);
+
+            const weatherResponse = await fetch(weatherURL);
+            const weatherData = await weatherResponse.json();
+            setWeatherDetails(weatherData); 
+            setLoading(false);
           }
-        })
-        .then((response) => response.json())
-        .then((weatherData) => {
-          setWeatherDetails(weatherData);
-          setLoading(false);
-        })
-        .catch(() => {
+
+        } catch (error) {
           console.log("Error fetching weather data");
-          setLoading(false);
-        });
-    }
+          setLoading(false); 
+        }
+      }
+    };
+
+    fetchWeatherDetails(); 
   }, [location]);
-  /////////////////////////////////ADDED GRAPH
+
+  // Function to extract and store weather details
   const setWeatherDetails = (weatherData) => {
     const firstDayData = weatherData.list[0];
     setTemp(firstDayData.temp.day);
@@ -65,26 +74,29 @@ const Weatherdetails = ({ location }) => {
     setPressure(firstDayData.pressure);
     setWind(firstDayData.speed);
 
+    // Process precipitation data
     const precipitation = weatherData.list.map((item) => ({
-      time: new Date(item.dt * 1000),
+      time: new Date(item.dt * 1000), 
       precipitation: item.rain ? item.rain["3h"] : 0,
     }));
-    setPrecipitationData(precipitation);
+    setPrecipitationData(precipitation); 
   };
 
+  // Render the precipitation chart (when data loads)
   useEffect(() => {
     if (!loading && precipitationData.length > 0) {
       renderChart();
     }
   }, [precipitationData, loading]);
 
+  // Function to render the chart
   const renderChart = () => {
     const ctx = document.getElementById("precipitationChart");
     if (ctx) {
+      // Handles updates to an existing chart
       const existingChartInstance = Chart.getChart(ctx);
-      if (existingChartInstance) {
-        // If there's an existing Chart instance, destroy it
-        existingChartInstance.destroy();
+      if (existingChartInstance) { 
+        existingChartInstance.destroy(); 
       }
       new Chart(ctx, {
         type: "line",
@@ -128,7 +140,7 @@ const Weatherdetails = ({ location }) => {
       });
     }
   };
-  /////////////////////////////////////////////////
+
   return (
     <div className="details-container">
       <h2>Weather Details</h2>

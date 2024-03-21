@@ -6,11 +6,9 @@
   display: flex;
 
 }
-
 .hourly::-webkit-scrollbar {
   width: 0;
 }
-
 .time-block {
   padding: 3px;
   margin-right: 10px;

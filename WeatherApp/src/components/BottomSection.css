@@ -2,7 +2,6 @@
   display: grid;
   height: 350px;
 }
-
 .bottomComponent {
   overflow-y: scroll;
 }

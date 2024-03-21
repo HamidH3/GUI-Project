@@ -5,7 +5,6 @@
     align-items: center;
     height: 10vh; /* Center elements within the viewport */
   }
-
 .searchButton {
     background: none;
     border: none;
@@ -18,13 +17,10 @@
     position: absolute; /* Position the button at the top */
     top: 20px;
   }
-  
   .searchBar {
     position: absolute; /* Existing style */ 
     top: 70px;
     background-color: rgba(0, 0, 0, 0.7); 
     border-radius: 5px;
     z-index: 10; /* Ensure search bar is on top */
-    
-    
   }

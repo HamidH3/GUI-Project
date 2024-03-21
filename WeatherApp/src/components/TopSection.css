@@ -50,7 +50,6 @@
 .desc {
 
   font-size: 19px;
-  /* margin-bottom: 2em; */
   margin-top: -30px;
  
 }
@@ -64,6 +63,5 @@
   padding: 0; /* Remove default padding */
   margin: 0; /* Remove default margin */
   text-align: center; /* Center text within the list container */
-  width: 100%; /* Allow list to take full width of search bar */
-    /* backdrop-filter: blur(20px); */
+  width: 100%;
 }
